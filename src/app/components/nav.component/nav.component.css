@@ -1,0 +1,43 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    background-color: rgb(14, 15, 83);
+    color: white;
+}
+label{
+  margin-top: 30px;
+  margin-left: 20px;
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+.nav-left{
+    display: flex;
+    align-items: stretch;
+}
+.nav-buttons{
+    margin-left: 25px;
+    display: flex;
+    align-items: center;
+    
+}
+
+.nav-btn {
+  border: none;
+  border-left: 1px white solid;
+  color :white;
+  background: none;
+  padding: 0 20px;
+  align-self: stretch; /* this is the key */
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.nav-btn:hover {
+  background: red;
+  color: white;
+}

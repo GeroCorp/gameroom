@@ -1,0 +1,14 @@
+.main-container{
+    background-color: darkslateblue;
+    max-width: fit-content;
+    padding: 30px;
+    border-radius: 5px;
+    display:flex;
+    flex-direction: column;
+}
+
+.miFoto{
+    border-radius: 50%;
+    border: 5px rgb(106, 210, 236) solid;
+    box-shadow: 20px black;
+}
