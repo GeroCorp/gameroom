@@ -10,6 +10,7 @@ import { Register } from './components/register/register';
 import { Soyyo } from './components/soyyo/soyyo';
 import { Log } from './pages/log/log';
 import { NavComponent } from './components/nav.component/nav.component';
+import { Home } from './components/home/home';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NavComponent } from './components/nav.component/nav.component';
     Register,
     Soyyo,
     Log,
-    NavComponent
+    NavComponent,
+    Home
   ],
   imports: [
     BrowserModule,
