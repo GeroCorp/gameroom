@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { GithubService } from '../../services/github.service';
 
 @Component({
@@ -11,17 +11,18 @@ export class Soyyo implements OnInit{
 
 
     userData: any;
-  constructor(private githubSvc: GithubService) {}
+  constructor(private githubSvc: GithubService,  private cdRef: ChangeDetectorRef) {}
 
-    ngOnInit(): void {
-    this.githubSvc.getUser()
-      .then(data => {
-        this.userData = data;
-        console.log(this.userData)
-      })
-      .catch(err => console.error(err));
-  }
+  async ngOnInit() {
+    try {
+      const data = await this.githubSvc.getUser();
+      this.userData = data;
+      this.cdRef.detectChanges();
+      console.log(this.userData);
+    }catch (e){
+      console.error(e);
       
+    }
+  }
 }
-
 

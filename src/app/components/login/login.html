@@ -1,5 +1,6 @@
-<div class>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+<div >
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="logForm">
+
         <label>Correo Electrónico: </label>
         <input type="email" formControlName="email" />
         @if (loginForm.get('email')?.touched && loginForm.get('email')?.invalid){

@@ -1,14 +1,16 @@
 <div class="main-container">
-    <div class="imagen-perfil">
-        <img [src]="userData.avatar_url" alt="" width="200" class="miFoto">
+    <div class="perfil">
+        <img [src]="userData?.avatar_url" alt="" width="200" class="miFoto">
+        <h2 for="">{{userData?.login}}   |   Gerónimo Corpus</h2>
     </div>
-    <div class="titulo">
-        <h2 for="">{{userData.name}}</h2>
-    </div>
-    <div class="datos"></div>
+
+    <div class="content">
     <div class="juego">
+        <h3>Tetris</h3>
         <p>
-            Todavia no sé pero seguramente sea tetris porque es el mejor juego del mundo.
+            Elegí el tetris porqué es de los juegos simples mas divertidos que conozco. 
+            <br>(y es el mejor juego del mundo)
         </p>
+    </div>
     </div>
 </div>
