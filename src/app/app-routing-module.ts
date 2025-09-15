@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { Soyyo } from './components/soyyo/soyyo';
 import { Home } from './components/home/home';
 import { Log } from './pages/log/log';
+import { Register } from './components/register/register';
 
 const routes: Routes = [
   {
@@ -10,6 +11,9 @@ const routes: Routes = [
   },
   {
     "path": "login", component: Log
+  },
+  {
+    "path": "register", component: Log
   },
   {
     "path": "quiensoy", component: Soyyo

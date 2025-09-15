@@ -1,1 +1,88 @@
-<p>register works!</p>
+<div class="main">
+    <form (ngSubmit)="onSubmit()" [formGroup]="regForm" class="register" id="regForm">
+        <label>Nombre: 
+        
+        <input type="text" formControlName="name" class="text-in"/>
+        @if (regForm.get('name')?.touched && regForm.get('name')?.invalid){
+            <div class="err-msg">
+                @if (regForm.get('name')?.errors?.['required']){
+                    <small> Debe ingresar un nombre</small>
+                }
+            </div>
+        }
+        </label>
+        <label>Apellido: 
+        <input type="text" formControlName="surname" class="text-in"/>
+        @if (regForm.get('surname')?.touched && regForm.get('surname')?.invalid){
+            <div class="err-msg">
+                @if (regForm.get('surname')?.errors?.['required']){
+                    <small> Debe ingresar un apellido</small>
+                }
+            </div>
+        }</label>
+
+        <label>Edad
+        <input type="number" formControlName="age" clas="age-in"/>
+        @if (regForm.get('age')?.touched && regForm.get('age')?.invalid){
+            <div class="err-msg">
+                @if (regForm.get('age')?.errors?.['required']){
+                    <small> Debe ingresar su edad</small>
+                }
+                @if (regForm.get('age')?.errors?.['min']){
+                    <small> La edad mínima es 10 años</small>
+                }
+            </div>
+        }</label>
+
+        <label>Correo Electrónico: 
+        <input type="email" formControlName="email" class="text-in"/>
+        @if (regForm.get('email')?.touched && regForm.get('email')?.invalid || supabase.error()){
+            <div class="err-msg">
+                @if (regForm.get('email')?.errors?.['required']){
+                    <small> Debe ingresar un correo electrónico</small>
+                }
+                @if (regForm.get('email')?.errors?.['email']){
+                    <small> El formato no es válido</small>
+                }
+                @if (regForm.get('email')?.errors?.['emailTaken']){
+                    <small> El correo electrónico ya está en uso</small>
+                }
+                @if (formSubmitted && supabase.error() == 'El correo electrónico ya está en uso.'){
+                    <small> El correo electrónico ya está en uso</small>
+                }
+            </div>
+        }
+        </label>
+
+        <label>Contraseña: 
+        <input type="password" formControlName="password" class="text-in"/>
+        @if (regForm.get('password')?.touched && regForm.get('password')?.invalid){
+            <div class="err-msg">
+                @if (regForm.get('password')?.errors?.['required']){
+                    <small> Debe ingresar una contraseña</small>
+                }
+                @if (regForm.get('password')?.errors?.['minlength']){
+                    <small> Minimo de 8 caracteres</small>
+                }
+            </div>
+        }</label>
+        <label>Confirmar contraseña: 
+        <input type="password" formControlName="password2" class="text-in"/>
+        @if (regForm.get('password2')?.touched && regForm.get('password2')?.invalid || regForm.get('password2')?.value != regForm.get('password')?.value){
+            <div class="err-msg">
+                @if (regForm.get('password2')?.errors?.['required']){
+                    <small> Debe ingresar una contraseña</small>
+                }
+                @if (regForm.get('password2')?.errors?.['minlength']){
+                    <small> Minimo de 8 caracteres</small>
+                }
+                @if (regForm.get('password2')?.value != regForm.get('password')?.value){
+                    <small> Las contraseñas no coinciden</small>
+                    
+                }
+            </div>
+        }</label>
+
+    </form>
+    <button type="submit" form="regForm" [disabled]="regForm.invalid || regForm.get('password')?.value !== regForm.get('password2')?.value" class="btn">REGISTRARSE</button>
+</div>

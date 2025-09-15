@@ -1,0 +1,59 @@
+*{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.personal-info{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.register{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: rgb(74, 50, 207);
+    gap:5px;
+    width: 550px;    
+}
+input{
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    width: 250px;
+    margin-top: 5px;
+}
+/* Elimina las flechas del number input */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.login-btn{
+    color: white;
+    background-color: rgb(45, 62, 219);
+    border-bottom: 2px solid white;
+    border-right: 2px solid white;
+}
+
+.btn {
+    border: none;
+    margin-top: 10px;
+    width: 100%;
+    padding: 10px;
+    transition: 300ms;
+    border-radius: 20px;
+}
+.btn:hover{
+    cursor: pointer;
+    color:white;
+    background-color: rgb(129, 129, 129);
+    transition: 300ms;
+}
+
+.err-msg{
+    color: rgb(250, 45, 45);
+    margin-top: 5px;
+    font-weight: bold;
+}

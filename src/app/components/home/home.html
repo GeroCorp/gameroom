@@ -1,1 +1,63 @@
-<h1>Bienvenido!!!</h1>
+<div class="main-content">
+    <div class="juegos-grid">
+
+        <div class="card">
+            <div class="card-header">
+                <!-- Agregar imagen header (blureada por detras del titulo?) | Cambiar fuente | Cambiar estilo nav-->
+                <h2>Ahorcado</h2>
+            </div>
+            <div class="card-content">
+                <p>Adivina la palabra secreta letra por letra antes de que se complete el dibujo del ahorcado.</p>
+            </div>
+            @if(supabase.user()){
+                <button class="play-btn">Iniciar Juego</button>
+            }@else{
+                <p class="login-prompt">Inicia sesión para jugar</p>
+            }
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Mayor o Menor</h2>
+            </div>
+            <div class="card-content">
+                <p>El objetivo es adivinar si la siguiente carta será mayor o menor que la actual.</p>
+            </div>
+            @if(supabase.user()){
+                <button class="play-btn">Iniciar Juego</button>
+            }@else{
+                <p class="login-prompt">Inicia sesión para jugar</p>
+            }
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Preguntados</h2>
+            </div>
+            <div class="card-content">
+                <p>Responde preguntas de distintas categorías y demuestra tus conocimientos para ganar.</p>
+            </div>
+            @if(supabase.user()){
+                <button class="play-btn">Iniciar Juego</button>
+            }@else{
+                <p class="login-prompt">Inicia sesión para jugar</p>
+            }
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Juego 4</h2>
+            </div>
+            <div class="card-content">
+                <p>Descripción breve del juego 4.</p>
+            </div>
+            @if(supabase.user()){
+                <button class="play-btn">Iniciar Juego</button>
+            }@else{
+                <p class="login-prompt">Inicia sesión para jugar</p>
+            }
+        </div>
+
+        
+    </div>
+</div>

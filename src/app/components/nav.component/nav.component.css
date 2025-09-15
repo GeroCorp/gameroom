@@ -41,3 +41,9 @@ label{
   background: red;
   color: white;
 }
+
+.username{
+  margin-right: 15px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}

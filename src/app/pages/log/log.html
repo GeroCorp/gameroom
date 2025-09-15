@@ -1,12 +1,24 @@
 <div class="main">
-    <div class="title">
-        <h3>Iniciar Sesión</h3>
-    </div>
     <div class="content">
-        <app-login></app-login>
-    </div>
-    <div class="buttons">
-        <button class="login-btn btn">Ingresar</button>
-        <button class="reg-btn btn">Registrarse</button>
+        @if (this.nashe == "login"){
+
+                <h2>Iniciar Sesión</h2>
+
+            <app-login></app-login>
+            <div class="optional">
+                <label>¿No tienes una cuenta?</label>
+                <button class="reg-btn btn" routerLink="/register">Registrarse</button>
+            </div>
+        }
+        @if (this.nashe == "register"){
+
+            <h3>Registrarse</h3>
+
+            <app-register></app-register>
+            <div class="optional">
+                <label>¿Ya tienes una cuenta?</label>
+                <button class="reg-btn btn" routerLink="/login">Iniciar Sesión</button>
+            </div>
+        }
     </div>
 </div>

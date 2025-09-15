@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { Octokit } from '@octokit/core';
-import { environment } from '../enviroment/enviroment';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'

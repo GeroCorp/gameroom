@@ -1,7 +1,7 @@
 <nav>
     <div class="nav-left">
         <div class="nav-logo">
-            <img src="../../assets/Dragon_Icon.png" alt="">
+            <img src="/public/Dragon_Icon.png" alt="">
         </div>
         <label for="">GAMERoom</label>
         <div class="nav-buttons">
@@ -11,7 +11,15 @@
         </div>
     </div>
 
+    @if (supabase.user()) {
     <div class="nav-right">
-        <button class="nav-btn" routerLink="/login">Login</button>
+        <span class="username"> {{ supabase.user()?.user_metadata?.['name'] }} </span>
+        <button class="nav-btn" (click)="logout()">Cerrar Sesión</button>
     </div>
+    }
+    @else {
+        <div class="nav-right">
+            <button class="nav-btn" routerLink="/login">Iniciar Sesión | Registrarse</button>
+        </div>
+    }
 </nav>
