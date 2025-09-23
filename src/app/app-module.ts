@@ -15,6 +15,7 @@ import { Ahorcado } from './pages/ahorcado/ahorcado';
 import { PopupEstado } from './pages/ahorcado/popup-estado/popup-estado';
 import { MayorMenor } from './pages/mayor-menor/mayor-menor';
 import { SalaChat } from './components/sala-chat/sala-chat';
+import { Popup } from './pages/mayor-menor/popup/popup';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { SalaChat } from './components/sala-chat/sala-chat';
     Ahorcado,
     PopupEstado,
     MayorMenor,
-    SalaChat
+    SalaChat,
+    Popup
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,52 @@
+.popup-container {
+  /* Estilos base para el pop-up */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.popup {
+    display: flex;
+    flex-direction: column;
+
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+}
+.popup button{
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    transition: 300ms;
+    &:hover{
+        background-color: #ddd;
+    }
+}
+
+/* Estilos para cuando el jugador GANA */
+.popup.won {
+    background-color: #28a745; /* Un color verde */
+    border: 4px solid green;
+    box-shadow: 0 0 20px #0d6a22;
+}
+
+/* Estilos para cuando el jugador PIERDE */
+.popup.lost {
+    background-color: #c42434; /* Un color rojo */
+    border: 4px solid red;
+    box-shadow: 0 0 20px #8b111d;
+}

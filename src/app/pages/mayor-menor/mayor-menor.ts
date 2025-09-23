@@ -9,7 +9,7 @@ import { Supabase } from '../../services/supabase';
 })
 export class MayorMenor implements OnInit {
 
-  isFlipped: boolean = false;
+
   userGuessed: boolean = false;
   userPoints: number = 0;
   backCardImage: string = 'assets/cards/back.png';
@@ -44,7 +44,9 @@ export class MayorMenor implements OnInit {
     this.userGuess = guess;
     this.userGuessed = true;
     
-    if ((this.userGuess === 'higher' && this.nextCard.value > this.currentCard.value) || (this.userGuess === 'lower' && this.nextCard.value < this.currentCard.value)) {
+    if ((this.userGuess === 'higher' && this.nextCard.value > this.currentCard.value) || 
+    (this.userGuess === 'lower' && this.nextCard.value < this.currentCard.value)||
+    (this.nextCard.value === this.currentCard.value)) {
       
       // en caso de adivinar sumar punto
       this.userPoints++;
@@ -100,8 +102,13 @@ export class MayorMenor implements OnInit {
     return this.cards[Math.floor(Math.random() * this.cards.length)];
   }
 
-  flipCard(){
-    this.isFlipped = !this.isFlipped;
+  async startNewGame() {
+    this.state = 'start';
+    this.userPoints = 0;
+    this.userGuessed = false;
+    this.userGuess = null;
+    Promise.resolve().then(() => {
+        this.startCards();
+    });
   }
-
 }
