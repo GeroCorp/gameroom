@@ -10,7 +10,7 @@
                 <p>Adivina la palabra secreta letra por letra antes de que se complete el dibujo del ahorcado.</p>
             </div>
             @if(supabase.user()){
-                <button class="play-btn">Iniciar Juego</button>
+                <button class="play-btn" [routerLink]="['ahorcado']">Iniciar Juego</button>
             }@else{
                 <p class="login-prompt">Inicia sesión para jugar</p>
             }
@@ -24,7 +24,7 @@
                 <p>El objetivo es adivinar si la siguiente carta será mayor o menor que la actual.</p>
             </div>
             @if(supabase.user()){
-                <button class="play-btn">Iniciar Juego</button>
+                <button class="play-btn" [routerLink]="['mayormenor']">Iniciar Juego</button>
             }@else{
                 <p class="login-prompt">Inicia sesión para jugar</p>
             }

@@ -1,0 +1,67 @@
+<div class="main">
+    <div class="header">
+        <h1>Ahorcado</h1>
+    </div>
+
+    <div class="content">
+        <div class="container-juego">
+            <div class="left-column">
+                <div class="main-juego">
+                    <div class="display-palabra">
+                        @if (display.length > 0){
+                        <h2 class="palabra"> {{display.join(' ')}} </h2>
+                    }
+                    </div>
+                    <div class="teclado">
+                            @for (letra of abcdario; track $index){
+                                <button (click)="adivinarLetra(letra)" [disabled]="letras.includes(letra) || estado !== 'jugando'">
+                                    {{letra}}
+                                </button>
+                            }
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ahorcado">
+
+                <!-- acá DEBERIA ir la progresión de errores en imagenes -->
+                <div class="imagen-ahorcado">
+                    <p>Imagenes en proceso 🫡</p>
+                    <img src="assets/hang.png" alt="Ahorcado">
+                </div>
+                <div class="errores">
+                    <p>Intentos restantes: {{nroIntentos}}</p>
+                    <h3>Letras incorrectas: </h3>
+                    <p class="letras-incorrectas">{{letrasIncorrectas.join(', ')}}</p>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="leaderboard">
+            <table>
+                <th>
+                    <tr>LeaderBoard</tr>
+                </th>
+                <tr>
+                    <td>1. Usuario1 - 100 puntos</td>
+                </tr>
+                <tr>
+                    <td>2. Usuario2 - 80 puntos</td>
+                </tr>
+                <tr>
+                    <td>3. Usuario3 - 60 puntos</td>
+                </tr>
+            </table>
+            
+        </div> -->
+
+    </div>
+    
+        <app-popup-estado
+        *ngIf="estado == 'ganado' || estado == 'perdido'"
+        [estado]="estado"
+        [palabraSecreta]="palabraSecreta"
+        (nuevoJuego)="startNewGame()"
+        >
+        </app-popup-estado>
+    
+</div>

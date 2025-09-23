@@ -105,4 +105,56 @@ export class Supabase {
     return data.user;
   }
 
+  async getCards(){
+    const { data, error } = await this.supabase
+      .from('cards')
+      .select('*');
+    if (error) throw new Error('No se pudieron obtener las cartas.');
+    console.log(data);
+    return data;
+  }
+
+  async getMessages(){
+    const { data, error } = await this.supabase
+      .from('messages')
+      .select('*')
+      .order('send_date', { ascending: true });
+    if (error) throw new Error('No se pudieron obtener los mensajes.');
+    console.log(data);
+    return data;
+  }
+
+  async sendMessage(messageContent: string) {
+    const { data: { user } } = await this.supabase.auth.getUser();
+
+    if (user) {
+      const { error } = await this.supabase
+        .from('messages')
+        .insert({
+          content: messageContent,
+          user_id: user.id,
+          send_date: new Date().toISOString()
+        });
+
+      if (error) {
+        console.error('Error al enviar el mensaje:', error);
+      }
+    }
+  }
+  async subscribeToMessages() {
+
+    const channels = this.supabase.channel('custom-all-channel')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'messages' },
+        (payload) => {
+          console.log('Change received!', payload)
+        }
+      )
+      .subscribe()
+
+      return 
+  }
+  
+
 }

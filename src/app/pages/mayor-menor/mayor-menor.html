@@ -1,0 +1,55 @@
+<div class="main">
+    <div class="header">
+        <h1>Mayor o Menor</h1>
+    </div>
+
+
+    <div class="content">
+
+        <div class="container-juego">
+            
+            <div class="score">
+                <h2>Puntaje: {{userPoints}}</h2>
+            </div>
+            
+            <div class="display-card">
+                <div class="cards">
+                    <div class="card-face current-card" [ngClass]="{ 'flipped': isFlipped}">
+                        @if (cards.length > 0){
+                            <img [src]="currentCard.image" alt="">
+                            <p>card data: {{ currentCard?.name }}</p>
+                        }
+                    </div>
+                    <div class="card-fac to-guess">
+
+                        @if(userGuessed){
+                            <img [src]="nextCard?.imagen" alt="">
+                            <p>card data: {{ nextCard?.nombre }}</p>
+                        } 
+                        @else {
+                            <img [src]="backCardImage" alt="">
+                            <p>?</p>
+                        }
+                    
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button class="btn-mayor" (click)="handleUserGuess('higher')">Mayor +</button>
+                <button class="btn-menor" (click)="handleUserGuess('lower')">Menor -</button>
+            </div>
+
+            <div class="leaderboard"></div>
+
+
+        </div>
+
+        <div class="popup">
+            <!-- Popup finalización -->
+        </div>
+
+    </div>
+
+</div>

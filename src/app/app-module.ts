@@ -11,6 +11,10 @@ import { Soyyo } from './components/soyyo/soyyo';
 import { Log } from './pages/log/log';
 import { NavComponent } from './components/nav.component/nav.component';
 import { Home } from './components/home/home';
+import { Ahorcado } from './pages/ahorcado/ahorcado';
+import { PopupEstado } from './pages/ahorcado/popup-estado/popup-estado';
+import { MayorMenor } from './pages/mayor-menor/mayor-menor';
+import { SalaChat } from './components/sala-chat/sala-chat';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,11 @@ import { Home } from './components/home/home';
     Soyyo,
     Log,
     NavComponent,
-    Home
+    Home,
+    Ahorcado,
+    PopupEstado,
+    MayorMenor,
+    SalaChat
   ],
   imports: [
     BrowserModule,

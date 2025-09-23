@@ -1,0 +1,15 @@
+<div class="popup-container">
+    <div class="popup" [ngClass]="{'won': estado === 'ganado', 'lost': estado === 'perdido'}">
+        @if (estado === 'ganado'){
+            <h2>¡Felicidades! Has ganado.</h2>
+            <p>La palabra era: {{palabraSecreta}}</p>
+        } 
+        
+        @if (estado === 'perdido'){
+            <h2>Has perdido. ¡Inténtalo de nuevo!</h2>
+            <p>La palabra era: {{palabraSecreta}}</p>
+        }
+        <button (click)="nuevoJuego.emit()">Nuevo Juego</button>
+        <button routerLink="/">Volver al menú</button>
+    </div>
+</div>
