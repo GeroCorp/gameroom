@@ -1,0 +1,78 @@
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10 col-12">
+      <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">
+            <i class="bi bi-chat-dots me-2"></i>Chat Global
+          </h4>
+        </div>
+        
+        <div class="card-body p-0" style="height: 60vh;">
+          <!-- Mensajes Container -->
+          <div class="h-100 overflow-auto p-3" id="messages-container">
+            @if (loading()) {
+              <div class="d-flex justify-content-center align-items-center h-100">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden">Cargando mensajes...</span>
+                </div>
+              </div>
+            }
+            
+            @for (msg of messages(); track $index) {
+              <div class="message-item mb-3" [ngClass]="{'own': msg.username === username, 'other': msg.username !== username}">
+                <div class="message-bubble">
+                  <div class="card text-light" [ngClass]="{'own-msg': msg.username === username, 'other-msg': msg.username !== username}">
+                    <div class="card-body">
+                      <p class="message-content mb-1">{{ msg.content }}</p>
+                      <small class="message-meta text-secondary">
+                        @if (msg.username == username) {
+                          <strong class="text-info">Tú</strong>
+                        } @else {
+                          <strong class="text-success">{{ msg.username || 'Anónimo' }}</strong>
+                        }
+                        @if (isNotToday(msg.send_date)) {
+                          <i class="bi me-1"></i>{{ formatMessageDate(msg.send_date) }}
+                        } @else {
+                          <i class="bi me-1"></i>- {{ msg.send_date | date:'HH:mm' }}
+                        }
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+            
+            @if (messages.length === 0 && !loading) {
+              <div class="text-center h-100 d-flex align-items-center justify-content-center">
+                <div>
+                  <i class="bi bi-chat-text display-4 mb-3"></i>
+                  <p>No hay mensajes aún. ¡Sé el primero en escribir!</p>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+        
+        <!-- Input de mensaje -->
+        <div class="card-footer bg-light">
+          <div class="input-group">
+            <input 
+              type="text" 
+              class="form-control" 
+              [(ngModel)]="newMessage" 
+              placeholder="Escribe tu mensaje..."
+              (keyup.enter)="sendMessage()">
+            <button 
+              class="btn btn-primary" 
+              type="button" 
+              (click)="sendMessage()" 
+              [disabled]="!newMessage.trim()">
+              <i class="bi bi-send"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

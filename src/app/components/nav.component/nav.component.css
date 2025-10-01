@@ -1,10 +1,47 @@
+/* Navbar con efecto neón azul */
 nav {
     display: flex;
     justify-content: space-between;
     height: 80px;
-    background-color: rgb(14, 15, 83);
+    background-color: rgb(10, 12, 112);
     color: white;
+    position: relative;
 }
+
+/* Efecto neón azul en el bottom */
+nav::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #00f5ff, #0080ff, #00f5ff);
+    box-shadow: 
+        0 0 5px #00f5ff,
+        0 0 10px #00f5ff,
+        0 0 15px #0080ff,
+        0 0 20px #0080ff;
+    animation: neonGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes neonGlow {
+    from {
+        box-shadow: 
+            0 0 5px #00f5ff,
+            0 0 10px #00f5ff,
+            0 0 15px #0080ff,
+            0 0 20px #0080ff;
+    }
+    to {
+        box-shadow: 
+            0 0 10px #00f5ff,
+            0 0 20px #00f5ff,
+            0 0 30px #0080ff,
+            0 0 40px #0080ff;
+    }
+}
+
 label{
   margin-top: 30px;
   margin-left: 20px;
@@ -46,4 +83,85 @@ label{
   margin-right: 15px;
   font-weight: bold;
   font-size: 1.1rem;
+}
+
+.dropdown-menu{
+  --bs-dropdown-min-width: 9.3rem;
+  --bs-dropdown-max-width: 9.3rem;
+  --bs-dropdown-bg: rgba(14, 15, 83, 0.95) !important;
+  --bs-dropdown-border-color: #00f5ff;
+  --bs-dropdown-border-width: 1px;
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.3),
+    0 0 10px rgba(0, 245, 255, 0.3);
+  z-index: 1050 !important;
+}
+
+.dropdown-menu .dropdown-item {
+  color: white !important;
+  padding: 8px 16px;
+  transition: all 0.3s ease;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: rgba(0, 245, 255, 0.2) !important;
+  color: #00f5ff !important;
+  text-shadow: 0 0 5px #00f5ff;
+}
+
+.dropdown-menu .dropdown-divider {
+  border-color: rgba(0, 245, 255, 0.3);
+  margin: 4px 0;
+}
+
+
+/* Mejoras para Bootstrap navbar */
+.navbar-dark {
+    background-color: rgb(14, 15, 83) !important;
+    position: relative;
+}
+
+/* Asegurar que el efecto neón funcione con Bootstrap */
+.navbar-dark::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #00f5ff, #0080ff, #00f5ff);
+    box-shadow: 
+        0 0 5px #00f5ff,
+        0 0 10px #00f5ff,
+        0 0 15px #0080ff,
+        0 0 20px #0080ff;
+    animation: neonGlow 2s ease-in-out infinite alternate;
+    z-index: 1;
+}
+
+/* Efecto adicional en hover para los nav-links */
+.navbar-nav .nav-link {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #00f5ff !important;
+    text-shadow: 0 0 8px #00f5ff;
+}
+
+.navbar-nav .nav-link.active {
+    color: #00f5ff !important;
+    text-shadow: 0 0 5px #00f5ff;
+}
+
+/* Efecto neón para el brand también */
+.navbar-brand:hover {
+    color: #00f5ff !important;
+    text-shadow: 0 0 10px #00f5ff;
+    transition: all 0.3s ease;
+}
+.navbar-brand {
+    transition: all 0.3s ease;
 }

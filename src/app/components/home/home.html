@@ -1,63 +1,114 @@
-<div class="main-content">
-    <div class="juegos-grid">
-
-        <div class="card">
-            <div class="card-header">
-                <!-- Agregar imagen header (blureada por detras del titulo?) | Cambiar fuente | Cambiar estilo nav-->
-                <h2>Ahorcado</h2>
-            </div>
-            <div class="card-content">
-                <p>Adivina la palabra secreta letra por letra antes de que se complete el dibujo del ahorcado.</p>
-            </div>
-            @if(supabase.user()){
-                <button class="play-btn" [routerLink]="['ahorcado']">Iniciar Juego</button>
-            }@else{
-                <p class="login-prompt">Inicia sesión para jugar</p>
-            }
-        </div>
-
-        <div class="card">
-            <div class="card-header">
-                <h2>Mayor o Menor</h2>
-            </div>
-            <div class="card-content">
-                <p>El objetivo es adivinar si la siguiente carta será mayor o menor que la actual.</p>
-            </div>
-            @if(supabase.user()){
-                <button class="play-btn" [routerLink]="['mayormenor']">Iniciar Juego</button>
-            }@else{
-                <p class="login-prompt">Inicia sesión para jugar</p>
-            }
-        </div>
-
-        <div class="card">
-            <div class="card-header">
-                <h2>Preguntados</h2>
-            </div>
-            <div class="card-content">
-                <p>Responde preguntas de distintas categorías y demuestra tus conocimientos para ganar.</p>
-            </div>
-            @if(supabase.user()){
-                <button class="play-btn">Iniciar Juego</button>
-            }@else{
-                <p class="login-prompt">Inicia sesión para jugar</p>
-            }
-        </div>
-
-        <div class="card">
-            <div class="card-header">
-                <h2>Juego 4</h2>
-            </div>
-            <div class="card-content">
-                <p>Descripción breve del juego 4.</p>
-            </div>
-            @if(supabase.user()){
-                <button class="play-btn">Iniciar Juego</button>
-            }@else{
-                <p class="login-prompt">Inicia sesión para jugar</p>
-            }
-        </div>
-
-        
+<div class="container-fluid py-5">
+  <div class="container">
+    <!-- Header -->
+    <div class="text-center mb-5 fade-in">
+      <h1 class="display-4 fw-bold text-primary mb-3">
+        <i class="bi bi-controller me-3"></i>GAMERoom
+      </h1>
+      <p class="lead">Disfruta de los mejores juegos en línea</p>
     </div>
+
+    <!-- Grid de juegos -->
+    <div class="row g-4 justify-content-center ">
+      <!-- Ahorcado -->
+      <div class="col-xl-5 col-lg-6 col-md-8 col-12 centered">
+        <div class="card h-100 shadow-lg hover-effect">
+          <div class="card-header bg-primary text-white text-center">
+            <h3 class="card-title mb-0">
+              <i class="bi bi-alphabet me-2"></i>Ahorcado
+            </h3>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <p class="card-text flex-grow-1">
+              Adivina la palabra secreta letra por letra antes de que se complete el dibujo del ahorcado.
+            </p>
+            @if(supabase.user()){
+              <a class="btn btn-primary btn-lg" [routerLink]="['ahorcado']">
+                <i class="bi bi-play-fill me-2"></i>Iniciar Juego
+              </a>
+            }@else{
+              <div class="alert alert-info mb-0">
+                <i class="bi bi-info-circle me-2"></i>Inicia sesión para jugar
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Mayor o Menor -->
+      <div class="col-xl-5 col-lg-6 col-md-8 col-12 centered">
+        <div class="card h-100 shadow-lg hover-effect">
+          <div class="card-header bg-success text-white text-center">
+            <h3 class="card-title mb-0">
+              <i class="bi bi-suit-spade me-2"></i>Mayor o Menor
+            </h3>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <p class="card-text flex-grow-1">
+              El objetivo es adivinar si la siguiente carta será mayor o menor que la actual.
+            </p>
+            @if(supabase.user()){
+              <a class="btn btn-success btn-lg" [routerLink]="['mayormenor']">
+                <i class="bi bi-play-fill me-2"></i>Iniciar Juego
+              </a>
+            }@else{
+              <div class="alert alert-info mb-0">
+                <i class="bi bi-info-circle me-2"></i>Inicia sesión para jugar
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Preguntados -->
+      <div class="col-xl-5 col-lg-6 col-md-8 col-12 centered">
+        <div class="card h-100 shadow-lg hover-effect">
+          <div class="card-header bg-warning text-dark text-center">
+            <h3 class="card-title mb-0">
+              <i class="bi bi-question-circle me-2"></i>Preguntados
+            </h3>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <p class="card-text flex-grow-1">
+              Responde preguntas de distintas categorías y demuestra tus conocimientos para ganar.
+            </p>
+            @if(supabase.user()){
+              <button class="btn btn-warning btn-lg" disabled>
+                <i class="bi bi-tools me-2"></i>Próximamente
+              </button>
+            }@else{
+              <div class="alert alert-info mb-0">
+                <i class="bi bi-info-circle me-2"></i>Inicia sesión para jugar
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Juego 4 -->
+      <div class="col-xl-5 col-lg-6 col-md-8 col-12 centered">
+        <div class="card h-100 shadow-lg hover-effect">
+          <div class="card-header bg-info text-white text-center">
+            <h3 class="card-title mb-0">
+              <i class="bi bi-puzzle me-2"></i>Juego Misterioso
+            </h3>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <p class="card-text flex-grow-1">
+              Un nuevo desafío te espera. ¿Estás listo para descubrir de qué se trata?
+            </p>
+            @if(supabase.user()){
+              <button class="btn btn-info btn-lg" disabled>
+                <i class="bi bi-tools me-2"></i>En Desarrollo
+              </button>
+            }@else{
+              <div class="alert alert-info mb-0">
+                <i class="bi bi-info-circle me-2"></i>Inicia sesión para jugar
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

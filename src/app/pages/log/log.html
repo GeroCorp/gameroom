@@ -1,24 +1,45 @@
-<div class="main">
-    <div class="content">
-        @if (this.nashe == "login"){
-
-                <h2>Iniciar Sesión</h2>
+<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center py-5">
+  <div class="row w-100 justify-content-center">
+    <div class="col-lg-5 col-md-7 col-sm-9 col-11">
+      <div class="card shadow-lg">
+        <div class="card-body p-5">
+          @if (this.nashe == "login"){
+            <div class="text-center mb-4">
+              <h2 class="card-title text-primary fw-bold">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
+              </h2>
+              <p class="text-muted">Accede a tu cuenta de GAMERoom</p>
+            </div>
 
             <app-login></app-login>
-            <div class="optional">
-                <label>¿No tienes una cuenta?</label>
-                <button class="reg-btn btn" routerLink="/register">Registrarse</button>
+            
+            <div class="text-center mt-4">
+              <p class="text-muted mb-2">¿No tienes una cuenta?</p>
+              <a class="btn btn-outline-primary" routerLink="/register">
+                <i class="bi bi-person-plus me-2"></i>Registrarse
+              </a>
             </div>
-        }
-        @if (this.nashe == "register"){
-
-            <h3>Registrarse</h3>
+          }
+          
+          @if (this.nashe == "register"){
+            <div class="text-center mb-4">
+              <h2 class="card-title text-success fw-bold">
+                <i class="bi bi-person-plus me-2"></i>Registrarse
+              </h2>
+              <p class="text-muted">Crea tu cuenta en GAMERoom</p>
+            </div>
 
             <app-register></app-register>
-            <div class="optional">
-                <label>¿Ya tienes una cuenta?</label>
-                <button class="reg-btn btn" routerLink="/login">Iniciar Sesión</button>
+            
+            <div class="text-center mt-4">
+              <p class="text-muted mb-2">¿Ya tienes una cuenta?</p>
+              <a class="btn btn-outline-success" routerLink="/login">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
+              </a>
             </div>
-        }
+          }
+        </div>
+      </div>
     </div>
+  </div>
 </div>

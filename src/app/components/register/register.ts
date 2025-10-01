@@ -18,9 +18,8 @@ export class Register {
       email: ['',[Validators.email, Validators.required]],
       password: ['', [Validators.minLength(8), Validators.required]],
       password2: ['', [Validators.minLength(8), Validators.required]],
-      name: ['', [Validators.required]],
-      surname: ['', [Validators.required]],
-      age: ['', [Validators.required, Validators.min(10)]]
+      name: ['', [Validators.required, Validators.minLength(4)]],
+      age: ['', [Validators.required, Validators.min(10), Validators.max(100)]],
     });
     
   }
@@ -36,7 +35,7 @@ export class Register {
     }
     try{
       const {email, password, name, surname, age} = this.regForm.value;
-      this.supabase.register(email, password, name, surname, age);
+      this.supabase.register(email, password, name, age);
     }catch (err: any){
       console.error('Error en registro:', err);
     }

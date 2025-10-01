@@ -1,88 +1,140 @@
-<div class="main">
-    <form (ngSubmit)="onSubmit()" [formGroup]="regForm" class="register" id="regForm">
-        <label>Nombre: 
-        
-        <input type="text" formControlName="name" class="text-in"/>
-        @if (regForm.get('name')?.touched && regForm.get('name')?.invalid){
-            <div class="err-msg">
-                @if (regForm.get('name')?.errors?.['required']){
-                    <small> Debe ingresar un nombre</small>
-                }
-            </div>
-        }
-        </label>
-        <label>Apellido: 
-        <input type="text" formControlName="surname" class="text-in"/>
-        @if (regForm.get('surname')?.touched && regForm.get('surname')?.invalid){
-            <div class="err-msg">
-                @if (regForm.get('surname')?.errors?.['required']){
-                    <small> Debe ingresar un apellido</small>
-                }
-            </div>
-        }</label>
+<div>
+  <form (ngSubmit)="onSubmit()" [formGroup]="regForm" id="regForm">
+    <!-- Nombre -->
+    <div class="mb-3">
+      <label for="name" class="form-label">Usuario</label>
+      <input 
+        type="text" 
+        class="form-control" 
+        id="name" 
+        formControlName="name"
+        placeholder="Nombre de usuario"
+        [class.is-invalid]="regForm.get('name')?.touched && regForm.get('name')?.invalid">
+      
+      @if (regForm.get('name')?.touched && regForm.get('name')?.invalid){
+        <div class="invalid-feedback">
+          @if (regForm.get('name')?.errors?.['required']){
+            <small>Debe ingresar un nombre</small>
+          }
+          @if (regForm.get('name')?.errors?.['minlength']){
+            <small>El nombre debe tener al menos 4 caracteres</small>
+          }
+        </div>
+      }
+    </div>
 
-        <label>Edad
-        <input type="number" formControlName="age" clas="age-in"/>
-        @if (regForm.get('age')?.touched && regForm.get('age')?.invalid){
-            <div class="err-msg">
-                @if (regForm.get('age')?.errors?.['required']){
-                    <small> Debe ingresar su edad</small>
-                }
-                @if (regForm.get('age')?.errors?.['min']){
-                    <small> La edad mínima es 10 años</small>
-                }
-            </div>
-        }</label>
+    <!-- Edad -->
+    <div class="mb-3">
+      <label for="age" class="form-label">Edad</label>
+      <input 
+        type="number" 
+        class="form-control" 
+        id="age" 
+        formControlName="age"
+        placeholder="Tu edad"
+        min="10"
+        [class.is-invalid]="regForm.get('age')?.touched && regForm.get('age')?.invalid">
+      
+      @if (regForm.get('age')?.touched && regForm.get('age')?.invalid){
+        <div class="invalid-feedback">
+          @if (regForm.get('age')?.errors?.['required']){
+            <small>Debe ingresar su edad</small>
+          }
+          @if (regForm.get('age')?.errors?.['min']){
+            <small>La edad mínima es 10 años</small>
+          }
+          @if (regForm.get('age')?.errors?.['max']){
+            <small>La edad máxima es 100 años</small>
+          }
+        </div>
+      }
+    </div>
 
-        <label>Correo Electrónico: 
-        <input type="email" formControlName="email" class="text-in"/>
-        @if (regForm.get('email')?.touched && regForm.get('email')?.invalid || supabase.error()){
-            <div class="err-msg">
-                @if (regForm.get('email')?.errors?.['required']){
-                    <small> Debe ingresar un correo electrónico</small>
-                }
-                @if (regForm.get('email')?.errors?.['email']){
-                    <small> El formato no es válido</small>
-                }
-                @if (regForm.get('email')?.errors?.['emailTaken']){
-                    <small> El correo electrónico ya está en uso</small>
-                }
-                @if (formSubmitted && supabase.error() == 'El correo electrónico ya está en uso.'){
-                    <small> El correo electrónico ya está en uso</small>
-                }
-            </div>
-        }
-        </label>
+    <!-- Email -->
+    <div class="mb-3">
+      <label for="email" class="form-label">Correo Electrónico</label>
+      <input 
+        type="email" 
+        class="form-control" 
+        id="email" 
+        formControlName="email"
+        placeholder="tu@email.com"
+        [class.is-invalid]="regForm.get('email')?.touched && regForm.get('email')?.invalid || supabase.error()">
+      
+      @if (regForm.get('email')?.touched && regForm.get('email')?.invalid || supabase.error()){
+        <div class="invalid-feedback">
+          @if (regForm.get('email')?.errors?.['required']){
+            <small>Debe ingresar un correo electrónico</small>
+          }
+          @if (regForm.get('email')?.errors?.['email']){
+            <small>El formato no es válido</small>
+          }
+          @if (regForm.get('email')?.errors?.['emailTaken'] || (formSubmitted && supabase.error() == 'El correo electrónico ya está en uso.')){
+            <small>El correo electrónico ya está en uso</small>
+          }
+        </div>
+      }
+    </div>
 
-        <label>Contraseña: 
-        <input type="password" formControlName="password" class="text-in"/>
-        @if (regForm.get('password')?.touched && regForm.get('password')?.invalid){
-            <div class="err-msg">
-                @if (regForm.get('password')?.errors?.['required']){
-                    <small> Debe ingresar una contraseña</small>
-                }
-                @if (regForm.get('password')?.errors?.['minlength']){
-                    <small> Minimo de 8 caracteres</small>
-                }
-            </div>
-        }</label>
-        <label>Confirmar contraseña: 
-        <input type="password" formControlName="password2" class="text-in"/>
-        @if (regForm.get('password2')?.touched && regForm.get('password2')?.invalid || regForm.get('password2')?.value != regForm.get('password')?.value){
-            <div class="err-msg">
-                @if (regForm.get('password2')?.errors?.['required']){
-                    <small> Debe ingresar una contraseña</small>
-                }
-                @if (regForm.get('password2')?.errors?.['minlength']){
-                    <small> Minimo de 8 caracteres</small>
-                }
-                @if (regForm.get('password2')?.value != regForm.get('password')?.value){
-                    <small> Las contraseñas no coinciden</small>
-                    
-                }
-            </div>
-        }</label>
+    <!-- Contraseña -->
+    <div class="mb-3">
+      <label for="password" class="form-label">Contraseña</label>
+      <input 
+        type="password" 
+        class="form-control" 
+        id="password" 
+        formControlName="password"
+        placeholder="Mínimo 8 caracteres"
+        [class.is-invalid]="regForm.get('password')?.touched && regForm.get('password')?.invalid">
+      
+      @if (regForm.get('password')?.touched && regForm.get('password')?.invalid){
+        <div class="invalid-feedback">
+          @if (regForm.get('password')?.errors?.['required']){
+            <small>Debe ingresar una contraseña</small>
+          }
+          @if (regForm.get('password')?.errors?.['minlength']){
+            <small>Mínimo de 8 caracteres</small>
+          }
+        </div>
+      }
+    </div>
 
-    </form>
-    <button type="submit" form="regForm" [disabled]="regForm.invalid || regForm.get('password')?.value !== regForm.get('password2')?.value" class="btn">REGISTRARSE</button>
+    <!-- Confirmar contraseña -->
+    <div class="mb-3">
+      <label for="password2" class="form-label">Confirmar contraseña</label>
+      <input 
+        type="password" 
+        class="form-control" 
+        id="password2" 
+        formControlName="password2"
+        placeholder="Repite tu contraseña"
+        [class.is-invalid]="regForm.get('password2')?.touched && regForm.get('password2')?.invalid || regForm.get('password2')?.value != regForm.get('password')?.value">
+      
+      @if (regForm.get('password2')?.touched && regForm.get('password2')?.invalid || regForm.get('password2')?.value != regForm.get('password')?.value){
+        <div class="invalid-feedback">
+          @if (regForm.get('password2')?.errors?.['required']){
+            <small>Debe ingresar una contraseña</small>
+          }
+          @if (regForm.get('password2')?.errors?.['minlength']){
+            <small>Mínimo de 8 caracteres</small>
+          }
+          @if (regForm.get('password2')?.value != regForm.get('password')?.value){
+            <small>Las contraseñas no coinciden</small>
+          }
+        </div>
+      }
+    </div>
+  </form>
+
+  <!-- Submit button -->
+  <div class="d-grid">
+    <button 
+      type="submit" 
+      form="regForm" 
+      class="btn btn-success btn-lg" 
+      [disabled]="regForm.invalid || regForm.get('password')?.value !== regForm.get('password2')?.value">
+      <i class="bi bi-person-plus me-2"></i>
+      REGISTRARSE
+    </button>
+  </div>
 </div>

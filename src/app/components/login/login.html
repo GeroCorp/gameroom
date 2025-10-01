@@ -1,45 +1,97 @@
-<div >
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="logForm">
-
-        <label>Correo Electrónico: </label>
-        <input type="email" formControlName="email" />
-        @if (loginForm.get('email')?.touched && loginForm.get('email')?.invalid){
-            <div class="err-msg">
-                @if (loginForm.get('email')?.errors?.['required']){
-                    <small> Debe ingresar un correo electrónico</small>
-                }
-                @if (loginForm.get('email')?.errors?.['email']){
-                    <small> El formato no es válido</small>
-                }
-            </div>
-        }
-
-        <label>Contraseña: </label>
-        <input type="password" formControlName="password" />
-        @if (loginForm.get('password')?.touched && loginForm.get('password')?.invalid){
-            <div class="err-msg">
-                @if (loginForm.get('password')?.errors?.['required']){
-                    <small> Debe ingresar una contraseña</small>
-                }
-                @if (loginForm.get('password')?.errors?.['minlength']){
-                    <small> Minimo de 8 caracteres</small>
-                }
-            </div>
-        }
-        @if (supabase.error() == 'Correo electrónico o contraseña incorrectos.'){
-            <div class="err-msg">
-                <small>{{supabase.error()}}</small>
-            </div>
-        }
-        <button type="submit" [disabled]="loginForm.invalid" class="btn">INGRESAR</button>
-        
-    </form>
-    <div class="accesos-rapidos">
-        <h3>Accesos rápidos</h3>
-        <div class="buttons">
-            <button value="gero." (click)="fastLog($event)" class="fast">Gero.</button>
-            <button value="test" (click)="fastLog($event)" class="fast">Test</button>
-            <button value="geronidos" (click)="fastLog($event)" class="fast">Geronidos</button>
+<div>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <!-- Email -->
+    <div class="mb-3">
+      <label for="email" class="form-label">Correo Electrónico</label>
+      <input 
+        type="email" 
+        class="form-control" 
+        id="email" 
+        formControlName="email"
+        placeholder="tu@email.com"
+        [class.is-invalid]="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+      
+      @if (loginForm.get('email')?.touched && loginForm.get('email')?.invalid){
+        <div class="invalid-feedback">
+          @if (loginForm.get('email')?.errors?.['required']){
+            <small>Debe ingresar un correo electrónico</small>
+          }
+          @if (loginForm.get('email')?.errors?.['email']){
+            <small>El formato no es válido</small>
+          }
         </div>
+      }
     </div>
+
+    <!-- Password -->
+    <div class="mb-4 ">
+      <label for="password" class="form-label">Contraseña</label>
+      <input 
+        type="password" 
+        class="form-control" 
+        id="password" 
+        formControlName="password"
+        placeholder="Tu contraseña"
+        [class.is-invalid]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+      
+      @if (loginForm.get('password')?.touched && loginForm.get('password')?.invalid){
+        <div class="invalid-feedback">
+          @if (loginForm.get('password')?.errors?.['required']){
+            <small>Debe ingresar una contraseña</small>
+          }
+          @if (loginForm.get('password')?.errors?.['minlength']){
+            <small>Mínimo de 8 caracteres</small>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Error de login -->
+    @if (supabase.error() == 'Correo electrónico o contraseña incorrectos.'){
+      <div class="alert alert-danger" role="alert">
+        <i class="bi bi-exclamation-triangle me-2"></i>
+        {{supabase.error()}}
+      </div>
+    }
+
+    <!-- Submit button -->
+    <div class="d-grid mb-4">
+      <button 
+        type="submit" 
+        class="btn btn-primary btn-lg" 
+        [disabled]="loginForm.invalid">
+        <i class="bi bi-box-arrow-in-right me-2"></i>
+        INGRESAR
+      </button>
+    </div>
+  </form>
+
+  <!-- Accesos rápidos -->
+  <div class="card bg-light">
+    <div class="card-body">
+      <h6 class="card-title text-muted mb-3">
+        <i class="bi bi-lightning me-2"></i>Accesos rápidos
+      </h6>
+      <div class="d-grid gap-2">
+        <button 
+          value="gero." 
+          (click)="fastLog($event)" 
+          class="btn btn-outline-secondary btn-sm">
+          <i class="bi  me-2"></i>Gero.
+        </button>
+        <button 
+          value="test" 
+          (click)="fastLog($event)" 
+          class="btn btn-outline-secondary btn-sm">
+          <i class="bi  me-2"></i>Pepe
+        </button>
+        <button 
+          value="geronidos" 
+          (click)="fastLog($event)" 
+          class="btn btn-outline-secondary btn-sm">
+          <i class="bi  me-2"></i>Juanjo
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

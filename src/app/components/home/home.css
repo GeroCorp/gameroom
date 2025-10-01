@@ -15,7 +15,10 @@
     align-items: center;
     gap: 10px;
 }
-
+.centered{
+    display:flex;
+    justify-content: center;
+}
 .play-btn{
     color: white;
     background-color: rgb(4, 134, 2);

@@ -53,7 +53,7 @@ export class Supabase {
     }
   }
 
-  async register(email: string, password: string, name: string, surname: string, age: number) {
+  async register(email: string, password: string, name: string, age: number) {
     try {
       const { data, error } = await this.supabase.auth.signUp({
         email, 
@@ -61,7 +61,6 @@ export class Supabase {
         options:{
           data:{
             name: name,
-            surname: surname,
             age: age
           }
         }
@@ -105,6 +104,17 @@ export class Supabase {
     return data.user;
   }
 
+  async getUserProfile() {
+    const currentUser = await this.getUser();
+    const { data, error } = await this.supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', currentUser?.id)
+      .single();
+    if (error) throw new Error('No se pudo obtener el perfil del usuario.');
+    return data ?? null;
+  }
+
   async getCards(){
     const { data, error } = await this.supabase
       .from('cards')
@@ -120,7 +130,6 @@ export class Supabase {
       .select('*')
       .order('send_date', { ascending: true });
     if (error) throw new Error('No se pudieron obtener los mensajes.');
-    console.log(data);
     return data;
   }
 
@@ -132,7 +141,7 @@ export class Supabase {
         .from('messages')
         .insert({
           content: messageContent,
-          user_id: user.id,
+          username: user.user_metadata['name'] || 'Usuario',
           send_date: new Date().toISOString()
         });
 
@@ -141,20 +150,26 @@ export class Supabase {
       }
     }
   }
-  async subscribeToMessages() {
 
-    const channels = this.supabase.channel('custom-all-channel')
+  async subscribeToMessages(input: any){
+    try{
+      this.supabase.channel('custom-insert-channel')
       .on(
         'postgres_changes',
-        { event: '*', schema: 'public', table: 'messages' },
+        { event: 'INSERT', schema: 'public', table: 'messages' },
         (payload) => {
           console.log('Change received!', payload)
+          const newRow = payload.new;
+          input.update((arr: any) => { // Update() modifica el signal de forma inmutable
+            return [...arr, newRow]
+          })
         }
-      )
-      .subscribe()
-
-      return 
+    )
+    .subscribe()
+    }catch (error)
+    {
+      console.error("Erros detectado: "+ error)
+    }
   }
-  
 
 }

@@ -5,7 +5,11 @@ import { Home } from './components/home/home';
 import { Log } from './pages/log/log';
 import { Ahorcado } from './pages/ahorcado/ahorcado';
 import { MayorMenor } from './pages/mayor-menor/mayor-menor';
-import { SalaChat } from './components/sala-chat/sala-chat';
+import { Chat } from './components/chat/chat';
+
+// Implementar lazy loading para optimizar <-- (login, register, quien soy)
+// ademasd de guards para rutas que requieren auth
+
 
 const routes: Routes = [
   {
@@ -27,7 +31,7 @@ const routes: Routes = [
     "path": "mayormenor", component: MayorMenor
   },
   {
-    "path": "chat", component: SalaChat
+    "path": "chat", component: Chat
   },
 ];
 

@@ -21,7 +21,7 @@ input{
     border-radius: 5px;
     color: white;
     border: none;
-    width: 250px;
+    width: 100%;
     margin-top: 5px;
 }
 /* Elimina las flechas del number input */
