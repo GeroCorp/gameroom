@@ -21,6 +21,10 @@ import { FormatearTiempoPipe } from './pipes/formatear-tiempo-pipe';
 import { Preguntados } from './pages/preguntados/preguntados';
 import { Popup as PreguntadosPopup } from './pages/preguntados/popup/popup';
 import { Scoreboard } from './components/scoreboard/scoreboard';
+import { Tetris } from './pages/tetris/tetris';
+import { HandleButtons } from './pages/tetris/handle-buttons';
+import { Grilla } from './pages/tetris/grilla/grilla';
+
 
 @NgModule({
   declarations: [
@@ -40,7 +44,10 @@ import { Scoreboard } from './components/scoreboard/scoreboard';
     FormatearTiempoPipe,
     Preguntados,
     PreguntadosPopup,
-    Scoreboard
+    Scoreboard,
+    Tetris,
+    HandleButtons,
+    Grilla
   ],
   imports: [
     BrowserModule,

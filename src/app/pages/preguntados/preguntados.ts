@@ -93,12 +93,16 @@ export class Preguntados implements OnInit{
           this.puntuacion += 15;
         break;
       }
-    } else {
-      this.puntuacion -= 5;
+    } else if (!wasCorrect) {
+      this.gameState = 'lost';
+      if (this.timerInterval) {
+        clearInterval(this.timerInterval);
+        this.timerInterval = null;
+      }
+      return;
     }
     
-    // Forzar actualización del render cuando cambia la puntuación
-    this.cdr.detectChanges();
+    this.cdr.detectChanges(); // Forzar actualización de la vista
     
     this.questions = this.questions.filter(q => q !== this.selectedQuestion); // Eliminar la pregunta actual
     await this.selectRandomQuestion();

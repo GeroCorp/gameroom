@@ -8,6 +8,14 @@
     min-height: 100vh;
 }
 
+/* Efecto visual para botones presionados */
+.button-pressed {
+    transform: scale(0.95) !important;
+    background-color: #00ff00 !important;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.8) !important;
+    transition: all 0.1s ease !important;
+}
+
 /* Contenedor del puntaje (izquierda) */
 .sidebar-left {
     display: flex;
@@ -153,71 +161,59 @@
 
 .container-juego{
     display: flex;
+    flex-direction: column;
+    align-items: center;;
 }
 
-.left-column{
-    .main-juego{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-around;
-        margin-top: 10px;
-        font-size: 1.2em;
-        font-weight: bold;
-        width: 100%;
-        height: -webkit-fill-available; /* LLena el espacio vacío */
-    }
+.display-tetris{
+    height: 700px;
+}
 
-    .display-palabra{
-        border: 3px rgb(34, 194, 216) solid;
-        border-radius: 15px;
-        background-color: rgb(4, 4, 54);
-        box-shadow: cyan 0px 0px 10px;
-        text-align: center;
-        height: 85px;
-        width: 90%;
-
-        .palabra{
-        font-size: 2em;
-        letter-spacing: 0.2em;
-        }
-    }
-
-    .teclado{
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        width: 90%;
-    }
-
-    .teclado button{
+.botones{
+    
+    .opt-button{
         margin: 5px;
-        padding: 10px 0;
-        width: 50px;
-        font-size: 1.2em;
-        border: 1px solid #ccc;
+        padding: 10px 20px;
+        font-size: 1em;
+        border: none;
         border-radius: 5px;
+        background-color: cyan;
+        color: black;
         cursor: pointer;
-        background-color: #f0f0f0;
-        &:disabled{
-            background-color: grey;
-            cursor: not-allowed;
+        transition: background-color 0.3s ease;
+        font-weight: 500;
+        
+        &:hover{
+            background-color: rgb(0, 200, 255);
+            color: white;
         }
+        &:active{
+            background-color: rgb(0, 100, 150);
+        }
+
     }
-}
+    .game-button{
+        margin: 5px;
+        height: 100px;
+        width: 100px;
+        font-size: 1.2em;
+        border: cyan 2px solid;
+        border-radius: 50%;
+        background-color: rgb(0, 150, 200);
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        
+        img{
+            width: 40px;
+            height: 40px;
+        }
 
-
-.ahorcado{
-    height: fit-content;
-    width: 45%;
-
-    .letras-incorrectas{
-        max-width: 70%;
-        padding: 5px;
-        border-radius: 5px;
-        background-color: rgb(3, 3, 58);
-        color: red;
-        font-weight: bold;
-        font-size: 1.5em;
+        &:hover{
+            background-color: rgb(0, 200, 255);
+        }
+        &:active{
+            background-color: rgb(0, 100, 150);
+        }
     }
 }

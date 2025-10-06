@@ -10,6 +10,7 @@ import { authGuard } from './guards/auth.guard';
 import { guestGuard } from './guards/guest.guard';
 import { Preguntados } from './pages/preguntados/preguntados';
 import { Scoreboard } from './components/scoreboard/scoreboard';
+import { Tetris } from './pages/tetris/tetris';
 
 // Implementar lazy loading para optimizar <-- (login, register, quien soy)
 // ademasd de guards para rutas que requieren auth
@@ -57,7 +58,10 @@ const routes: Routes = [
   {
     "path": "leaderboard", 
     component: Scoreboard,
-    canActivate: [authGuard] // Solo usuarios autenticados
+  },
+  {
+    "path": "tetris", 
+    component: Tetris,
   },
 ];
 

@@ -15,7 +15,7 @@
         <div class="header">
             <h1>Ahorcado</h1>
         </div>
-
+        @if(hangImages().length > 1){
         <div class="content">
             <div class="container-juego">
                 <div class="left-column">
@@ -38,8 +38,9 @@
                 <div class="ahorcado">
                     <!-- acá DEBERIA ir la progresión de errores en imagenes -->
                     <div class="imagen-ahorcado">
-                        <p>Imagenes en proceso 🫡</p>
-                        <img src="assets/hang.png" alt="Ahorcado">
+
+                            <img [src]="hangImages()[6 - nroIntentos]" alt="Ahorcado" [width]="300">
+                        
                     </div>
                     <div class="errores">
                         <p>Intentos restantes: {{nroIntentos}}</p>
@@ -49,7 +50,9 @@
                 </div>
             </div>
         </div>
-
+        }@else {
+            <p class="loading-scores">Cargando imagenes y palabras...</p>
+        }
         <app-popup-estado
         *ngIf="estado == 'ganado' || estado == 'perdido'"
         [estado]="estado"

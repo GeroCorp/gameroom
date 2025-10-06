@@ -18,4 +18,16 @@ export class Hangman {
     );
   }
 
+  getHangmanImages(): string[] {
+    return [
+      'https://wwuhskpyfqbxnfwnzxth.supabase.co/storage/v1/object/public/Hang-man/hangman_0.png',
+      'https://wwuhskpyfqbxnfwnzxth.supabase.co/storage/v1/object/public/Hang-man/hangman_1.png',
+      'https://wwuhskpyfqbxnfwnzxth.supabase.co/storage/v1/object/public/Hang-man/hangman_2.png',
+      'https://wwuhskpyfqbxnfwnzxth.supabase.co/storage/v1/object/public/Hang-man/hangman_3.png',
+      'https://wwuhskpyfqbxnfwnzxth.supabase.co/storage/v1/object/public/Hang-man/hangman_4.png',
+      'https://wwuhskpyfqbxnfwnzxth.supabase.co/storage/v1/object/public/Hang-man/hangman_5.png',
+      'https://wwuhskpyfqbxnfwnzxth.supabase.co/storage/v1/object/public/Hang-man/hangman_6.png'
+    ]
+  }
+
 }

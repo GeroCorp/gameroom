@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, signal } from '@angular/core';
 import { Hangman } from '../../services/hangman';
 import { Supabase } from '../../services/supabase';
 import { Router } from '@angular/router';
@@ -17,10 +17,13 @@ export class Ahorcado implements OnInit{
   letras: string[] = [];
   letrasIncorrectas: string[] = [];
   estado: 'jugando' | 'ganado' | 'perdido' = 'jugando';
-  abcdario: string[] = 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.split('');
   puntuacion: number = 0;
   scoreboard: any[] = [];
   loadingScoreboard: boolean = true;
+  loadingImages= signal<boolean>(true);
+  hangImages=  signal<string[]>([]);
+
+  abcdario: string[] = 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.split('');
 
   constructor (
     private hangmanService: Hangman, 
@@ -49,17 +52,28 @@ export class Ahorcado implements OnInit{
     // Cargar scoreboard inicial
     await this.getScoreboard();
     this.cdr.detectChanges(); // Forzar detección de cambios
-
-    this.hangmanService.getWords().subscribe(
-      (wordsArray: string[]) => {
-        
-        this.palabras = wordsArray;
-        console.log("Palabras cargadas:", this.palabras);
-        this.startNewGame();
-    });
+    await this.firstLoad();
+    
   }
 
 
+  async firstLoad(){
+    this.loadingImages.set(true);
+    try{
+      this.hangmanService.getWords().subscribe(
+        (wordsArray: string[]) => {
+          
+          this.palabras = wordsArray;
+          console.log("Palabras cargadas:", this.palabras);
+          this.startNewGame();
+      });
+      this.hangImages.set(this.hangmanService.getHangmanImages()) ;
+    }catch(error){
+      console.error("Error cargando palabras:", error);
+    }
+    this.loadingImages.set(false);
+    this.cdr.detectChanges(); // Forzar detección de cambios
+  }
 
   private seleccionarPalabra(): string {
     if (this.palabras.length === 0) {
@@ -86,7 +100,7 @@ export class Ahorcado implements OnInit{
       }
     }else{
       this.nroIntentos--;
-      this.puntuacion -= 1;
+      if(this.puntuacion > 0) this.puntuacion -= 1; // Penalizar puntuacion solo si es mayor a 0
       this.letrasIncorrectas.push(letra);
     }
     await this.estadoDelJuego();
