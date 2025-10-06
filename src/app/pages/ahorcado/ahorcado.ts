@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input } from '@angular/core';
+import { Component, OnInit, Output, Input, ChangeDetectorRef } from '@angular/core';
 import { Hangman } from '../../services/hangman';
 import { Supabase } from '../../services/supabase';
 import { Router } from '@angular/router';
@@ -18,9 +18,16 @@ export class Ahorcado implements OnInit{
   letrasIncorrectas: string[] = [];
   estado: 'jugando' | 'ganado' | 'perdido' = 'jugando';
   abcdario: string[] = 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.split('');
+  puntuacion: number = 0;
+  scoreboard: any[] = [];
+  loadingScoreboard: boolean = true;
 
-
-  constructor (private hangmanService: Hangman, private supabase: Supabase, private router: Router) {
+  constructor (
+    private hangmanService: Hangman, 
+    private supabase: Supabase, 
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) {
   }
 
   ///////////
@@ -30,7 +37,7 @@ export class Ahorcado implements OnInit{
   // Cargar puntos a supabase
   // Get puntos de supabase para leaderboard
 
-  ngOnInit() {
+  async ngOnInit() {
     if (this.supabase.user()){
       console.log("Usuario logueado:", this.supabase.user()?.email);
     }else{
@@ -39,7 +46,9 @@ export class Ahorcado implements OnInit{
       return;
     }
     
-
+    // Cargar scoreboard inicial
+    await this.getScoreboard();
+    this.cdr.detectChanges(); // Forzar detección de cambios
 
     this.hangmanService.getWords().subscribe(
       (wordsArray: string[]) => {
@@ -62,7 +71,7 @@ export class Ahorcado implements OnInit{
   
   }
 
-  adivinarLetra(letra: string) {
+  async adivinarLetra(letra: string) {
     if (this.estado !== 'jugando' || this.letras.includes(letra)) {
       return;
     }
@@ -77,17 +86,55 @@ export class Ahorcado implements OnInit{
       }
     }else{
       this.nroIntentos--;
+      this.puntuacion -= 1;
       this.letrasIncorrectas.push(letra);
     }
-    this.estadoDelJuego();
+    await this.estadoDelJuego();
     
   }
 
-  estadoDelJuego(){
+  async handleAdivino(){
+      this.puntuacion += 10;
+      this.palabras = this.palabras.filter(p => p !== this.palabraSecreta);
+      
+      // Verificar si quedan palabras disponibles
+      if (this.palabras.length === 0) {
+        console.log('¡Has completado todas las palabras!');
+        try {
+          await this.supabase.uploadScore('ahorcado', this.puntuacion);
+          console.log('Puntaje guardado exitosamente');
+          await this.getScoreboard(); // Actualizar el leaderboard
+        } catch (error) {
+          console.error('Error al guardar puntaje:', error);
+        }
+        this.estado = 'ganado';
+        return;
+      }
+      
+      // Seleccionar nueva palabra y reiniciar el juego
+      this.palabraSecreta = this.seleccionarPalabra().toUpperCase();
+      this.display = Array(this.palabraSecreta.length).fill('_');
+      this.letras = [];
+      this.letrasIncorrectas = [];
+      this.nroIntentos = 6;
+      this.estado = 'jugando';
+      
+      console.log('Nueva palabra seleccionada, continuando juego...');
+  }
+
+  async estadoDelJuego(){
     if (this.display.join('') === this.palabraSecreta) {
-      this.estado = 'ganado';
+      // En lugar de terminar el juego, llamar a handleAdivino
+      await this.handleAdivino();
     }else if (this.nroIntentos === 0) {
       this.estado = 'perdido';
+      try {
+        await this.supabase.uploadScore('ahorcado', this.puntuacion);
+        console.log('Puntaje guardado exitosamente');
+        await this.getScoreboard(); // Actualizar el leaderboard
+      } catch (error) {
+        console.error('Error al guardar puntaje:', error);
+      }
     }
     console.log(this.estado);
   }
@@ -98,8 +145,24 @@ export class Ahorcado implements OnInit{
     this.letras = [];
     this.letrasIncorrectas = [];
     this.nroIntentos = 6;
+    this.puntuacion = 0;
     this.estado = 'jugando';
-    console.log('Palabra secreta seleccionada:', this.palabraSecreta);
+  }
+
+  async getScoreboard(){
+    try {
+      this.loadingScoreboard = true;
+      console.log('Obteniendo scoreboard...');
+      const scores = await this.supabase.getScores('ahorcado');
+      this.scoreboard = scores || []; // Asegurar que siempre sea un array
+      console.log("Scoreboard actualizado:", this.scoreboard);
+    } catch (error) {
+      console.error('Error al obtener scoreboard:', error);
+      this.scoreboard = []; // Array vacío en caso de error
+    } finally {
+      this.loadingScoreboard = false;
+      this.cdr.detectChanges(); // Forzar detección de cambios
+    }
   }
 
 }

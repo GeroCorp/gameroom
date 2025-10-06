@@ -1,61 +1,55 @@
-<div class="main">
-    <div class="header">
-        <h1>Ahorcado</h1>
+<div class="game-layout">
+    <!-- Columna izquierda: Puntaje -->
+    <div class="sidebar-left">
+        <div class="score-container">
+            <h2>Puntaje</h2>
+            <div class="score-display">
+                <span class="score-number">{{puntuacion}}</span>
+                <span class="score-label">puntos</span>
+            </div>
+        </div>
     </div>
 
-    <div class="content">
-        <div class="container-juego">
-            <div class="left-column">
-                <div class="main-juego">
-                    <div class="display-palabra">
-                        @if (display.length > 0){
-                        <h2 class="palabra"> {{display.join(' ')}} </h2>
-                    }
-                    </div>
-                    <div class="teclado">
-                            @for (letra of abcdario; track $index){
-                                <button (click)="adivinarLetra(letra)" [disabled]="letras.includes(letra) || estado !== 'jugando'">
-                                    {{letra}}
-                                </button>
-                            }
-                    </div>
-                </div>
-            </div>
-            
-            <div class="ahorcado">
+    <!-- Columna central: Juego principal -->
+    <div class="main">
+        <div class="header">
+            <h1>Ahorcado</h1>
+        </div>
 
-                <!-- acá DEBERIA ir la progresión de errores en imagenes -->
-                <div class="imagen-ahorcado">
-                    <p>Imagenes en proceso 🫡</p>
-                    <img src="assets/hang.png" alt="Ahorcado">
+        <div class="content">
+            <div class="container-juego">
+                <div class="left-column">
+                    <div class="main-juego">
+                        <div class="display-palabra">
+                            @if (display.length > 0){
+                            <h2 class="palabra"> {{display.join(' ')}} </h2>
+                        }
+                        </div>
+                        <div class="teclado">
+                                @for (letra of abcdario; track $index){
+                                    <button (click)="adivinarLetra(letra)" [disabled]="letras.includes(letra) || estado !== 'jugando'">
+                                        {{letra}}
+                                    </button>
+                                }
+                        </div>
+                    </div>
                 </div>
-                <div class="errores">
-                    <p>Intentos restantes: {{nroIntentos}}</p>
-                    <h3>Letras incorrectas: </h3>
-                    <p class="letras-incorrectas">{{letrasIncorrectas.join(', ')}}</p>
+                
+                <div class="ahorcado">
+                    <!-- acá DEBERIA ir la progresión de errores en imagenes -->
+                    <div class="imagen-ahorcado">
+                        <p>Imagenes en proceso 🫡</p>
+                        <img src="assets/hang.png" alt="Ahorcado">
+                    </div>
+                    <div class="errores">
+                        <p>Intentos restantes: {{nroIntentos}}</p>
+                        <h3>Letras incorrectas: </h3>
+                        <p class="letras-incorrectas">{{letrasIncorrectas.join(', ')}}</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- <div class="leaderboard">
-            <table>
-                <th>
-                    <tr>LeaderBoard</tr>
-                </th>
-                <tr>
-                    <td>1. Usuario1 - 100 puntos</td>
-                </tr>
-                <tr>
-                    <td>2. Usuario2 - 80 puntos</td>
-                </tr>
-                <tr>
-                    <td>3. Usuario3 - 60 puntos</td>
-                </tr>
-            </table>
-            
-        </div> -->
 
-    </div>
-    
         <app-popup-estado
         *ngIf="estado == 'ganado' || estado == 'perdido'"
         [estado]="estado"
@@ -63,5 +57,31 @@
         (nuevoJuego)="startNewGame()"
         >
         </app-popup-estado>
-    
+    </div>
+
+    <!-- Columna derecha: Leaderboard -->
+    <div class="sidebar-right">
+        <div class="leaderboard-container">
+            <h2>LeaderBoard</h2>
+            <div class="leaderboard-content">
+                @if (loadingScoreboard) {
+                    <div class="loading-scores">
+                        <p>Cargando puntuaciones...</p>
+                    </div>
+                } @else if (scoreboard && scoreboard.length > 0) {
+                    @for (score of scoreboard; track score.id || $index) {
+                        <div class="score-entry">
+                            <span class="position">{{$index + 1}}.</span>
+                            <span class="player">{{score.username}}</span>
+                            <span class="points">{{score.puntuacion}} pts</span>
+                        </div>
+                    }
+                } @else {
+                    <div class="no-scores">
+                        <p>No hay puntuaciones disponibles</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </div>

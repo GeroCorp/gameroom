@@ -172,4 +172,69 @@ export class Supabase {
     }
   }
 
+  async uploadScore(game: string, score: number){
+    try {
+      const { data: { user } } = await this.supabase.auth.getUser();
+    
+      if (!user) {
+        throw new Error('Usuario no autenticado');
+      }
+
+      const scoreData = {
+        user_id: user.id,
+        username: user.user_metadata['name'] || 'Usuario',
+        juego: game,
+        puntuacion: score,
+        date: new Date().toISOString()
+      };
+
+      console.log('Enviando datos a scoreboard:', scoreData);
+
+      const { data, error } = await this.supabase
+        .from('scoreboard')
+        .insert(scoreData);
+
+      if (error) {
+        console.error('Error al subir puntaje:', error);
+        throw new Error(`Error al guardar puntaje: ${error.message}`);
+      }
+
+      console.log('Puntaje guardado exitosamente:', data);
+      return data;
+    } catch (err: any) {
+      console.error('Error en uploadScore:', err);
+      throw new Error(err.message || 'Error desconocido al subir puntaje');
+    }
+  }
+
+  async getScores(game: string){
+    const { data, error } = await this.supabase
+      .from('scoreboard')
+      .select('*')
+      .eq('juego', game)
+      .order('puntuacion', { ascending: false })
+      .limit(10);
+    if (error) throw new Error('No se pudieron obtener los puntajes.');
+    return data;
+  }
+
+  async getQuestions(){
+    const { data, error } = await this.supabase
+      .from('preguntas')
+      .select('*');
+    if (error) throw new Error('No se pudieron obtener las preguntas.');
+
+    return data;
+  }
+
+  async getGlobalScores(){
+    const { data, error } = await this.supabase
+      .from('scoreboard')
+      .select('*')
+      .order('puntuacion', { ascending: false })
+      .limit(10);
+    if (error) throw new Error('No se pudieron obtener los puntajes globales.');
+    return data;
+  }
+
 }

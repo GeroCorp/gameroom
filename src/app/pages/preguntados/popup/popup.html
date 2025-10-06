@@ -7,18 +7,13 @@
         
         @if (state === 'lose'){
             <h2>Has perdido. ¡Inténtalo de nuevo!</h2>
-            @if (nextCard) {
+            @if (correctAnswer) {
                 <div class="card-reveal">
-                    <p><strong>La carta era:</strong></p>
-                    <div class="card-face to-guess">
-                        <img [src]="nextCard.image" alt="Carta correcta">
+                    <p><strong>La respuesta correcta era:</strong></p>
+                    <div class="answer-reveal">
+                        <p class="correct-answer">{{correctAnswer}}</p>
                     </div>
-                    <p class="card-info">
-                        <strong>{{nextCard.name || 'Carta'}} - Valor: {{nextCard.value}}</strong>
-                    </p>
                 </div>
-            } @else {
-                <p>Error al cargar la carta</p>
             }
             <strong>Puntos conseguidos: {{ points }}</strong>
         }

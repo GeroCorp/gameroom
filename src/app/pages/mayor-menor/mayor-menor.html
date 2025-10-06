@@ -1,58 +1,95 @@
-<div class="main">
-    <div class="header">
-        <h1>Mayor o Menor</h1>
-    </div>
-
-
-    <div class="content">
-
-        <div class="container-juego">
-            
-            <div class="score">
-                <h2>Puntaje: {{userPoints}}</h2>
-            </div>
-            
-            <div class="display-card">
-                <div class="cards">
-                    <div class="card-face current-card">
-                        @if (cards.length > 0 && currentCard){
-                            <img [src]="currentCard.image" alt="">
-                        }
-                    </div>
-                    <div class="card-fac to-guess">
-
-                        @if(userGuessed){
-                            <img [src]="nextCard?.image" alt="">
-                        } 
-                        @else {
-                            <img [src]="backCardImage" alt="">
-                        }
-                    
-                    </div>
-
+<div class="game-layout">
+    <!-- Columna izquierda: Puntaje -->
+     @if (state !== 'start') {
+        <div class="sidebar-left">
+            <div class="score-container">
+                <h2>Puntaje</h2>
+                <div class="score-display">
+                    <span class="score-number">{{userPoints}}</span>
+                    <span class="score-label">puntos</span>
                 </div>
             </div>
+        </div>
+    }
+    <!-- Columna central: Juego principal -->
+    <div class="main">
+        <div class="header">
+            <h1>Mayor o Menor</h1>
+        </div>
 
-            <div class="buttons">
-                <button class="btn-mayor" (click)="handleUserGuess('higher')">Mayor +</button>
-                <button class="btn-menor" (click)="handleUserGuess('lower')">Menor -</button>
+        <div class="content">
+            <div class="container-juego">
+                <div class="display-card">
+                    @if (state === 'start') {
+                        <div class="start-game-container">
+                            <div class="start-message">
+                                <h3>¡Bienvenido al Mayor o Menor!</h3>
+                                <p>Adivina si la siguiente carta será mayor o menor que la actual</p>
+                                <button class="btn-start-game" (click)="startNewGame()">
+                                    <span class="start-icon">🎮</span>
+                                    Comenzar Juego
+                                </button>
+                            </div>
+                        </div>
+                    } @else if (state === 'playing' && currentCard && nextCard) {
+                        <div class="cards">
+                            <div class="card-face current-card">
+                                <img [src]="currentCard.image" alt="">
+                            </div>
+                        </div>
+                    } @else {
+                        <div class="loading-game">
+                            <p>Cargando juego...</p>
+                        </div>
+                    }
+                </div>
+
+                <div class="buttons">
+                    @if (state === 'playing' && currentCard && !userGuessed) {
+                        <button class="btn-mayor" (click)="handleUserGuess('higher')">Mayor +</button>
+                        <button class="btn-menor" (click)="handleUserGuess('lower')">Menor -</button>
+                    } @else if (userGuessed) {
+                        <div class="waiting-message">
+                            <p>Preparando siguiente ronda...</p>
+                            <button class="btn-continue" (click)="continueGame()">Continuar</button>
+                        </div>
+                    }
+                </div>
             </div>
-
-            <div class="leaderboard"></div>
-
-
         </div>
 
-        <div class="popup">
-            <app-popup
-                *ngIf="state === 'win' || state === 'lose'"
-                [state]="state"
-                [points]="userPoints"
-                
-            ></app-popup>
-        </div>
-
-
+        <app-popup
+        *ngIf="state === 'win' || state === 'lose'"
+        [state]="state"
+        [points]="userPoints"
+        [nextCard]="nextCard"
+        (nuevoJuego)="startNewGame()"
+        ></app-popup>
     </div>
 
+    <!-- Columna derecha: Leaderboard -->
+    <div class="sidebar-right">
+        <div class="leaderboard-container">
+            <h2>LeaderBoard</h2>
+            <div class="leaderboard-content">
+                @if (loadingScoreboard) {
+                    <div class="loading-scores">
+                        <p>Cargando puntuaciones...</p>
+                    </div>
+                } @else if (scoreboard && scoreboard.length > 0) {
+                    @for (score of scoreboard; track score.id || $index) {
+                        <div class="score-entry">
+                            <span class="position">{{$index + 1}}.</span>
+                            <span class="player">{{score.username}}</span>
+                            <span class="points">{{score.puntuacion}} pts</span>
+                        </div>
+                    }
+                } @else {
+                    <div class="no-scores">
+                        <p>No hay puntuaciones disponibles</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </div>

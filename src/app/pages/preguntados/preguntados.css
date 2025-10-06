@@ -1,0 +1,341 @@
+/* Layout principal de tres columnas */
+.game-layout {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+/* Contenedor del puntaje (izquierda) */
+.left-column {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+}
+
+.score-container {
+    background-color: rgb(6, 6, 92);
+    border: cyan 5px solid;
+    box-shadow: cyan 0px 0px 20px;
+    border-radius: 30px;
+    padding: 20px;
+    text-align: center;
+    color: white;
+
+    h2 {
+        border-bottom: white 2px solid;
+        margin-bottom: 20px;
+        font-size: 1.5em;
+    }
+}
+
+.score-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.score-number {
+    font-size: 3em;
+    font-weight: bold;
+    color: cyan;
+    text-shadow: 0 0 15px cyan;
+}
+
+.score-label {
+    font-size: 1.2em;
+    color: white;
+}
+
+/* Contenedor del leaderboard (derecha) */
+.right-column {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+}
+
+.leaderboard {
+    background-color: rgb(6, 6, 92);
+    border: cyan 5px solid;
+    box-shadow: cyan 0px 0px 20px;
+    border-radius: 30px;
+    padding: 20px;
+    color: white;
+
+    h2 {
+        border-bottom: white 2px solid;
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 1.5em;
+    }
+
+    ol {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background-color: rgb(4, 4, 54);
+        border: 2px solid rgb(34, 194, 216);
+        border-radius: 10px;
+        font-size: 0.9em;
+        margin-bottom: 10px;
+        counter-increment: item;
+
+        &::before {
+            content: counter(item) '.';
+            font-weight: bold;
+            color: cyan;
+            width: 25px;
+        }
+
+        .player-name {
+            flex: 1;
+            text-align: center;
+            color: white;
+        }
+
+        .player-score {
+            color: #00ff00;
+            font-weight: bold;
+        }
+    }
+
+    p {
+        text-align: center;
+        color: #ccc;
+        font-style: italic;
+        padding: 20px;
+    }
+}
+
+.leaderboard ol {
+    counter-reset: item;
+}
+
+/* Centrar el layout completo */
+:host {
+    display: block;
+    width: 100%;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: fit-content;
+    background-color: rgb(6, 6, 92);
+    border: cyan 5px solid;
+    box-shadow: cyan 0px 0px 20px;
+    border-radius: 30px;
+    
+    h1 {
+        border-bottom: white 2px solid;
+        margin-bottom: 20px;
+        color: white;
+    }
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.container-juego {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    color: white;
+}
+
+/* Estilos específicos para preguntados */
+.start-game {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 300px;
+    text-align: center;
+    color: white;
+    
+    h3 {
+        font-size: 1.8em;
+        margin-bottom: 15px;
+        color: cyan;
+        text-shadow: 0 0 10px cyan;
+    }
+    
+    p {
+        font-size: 1.1em;
+        margin-bottom: 25px;
+        color: #ccc;
+    }
+}
+
+.btn-start-game {
+    padding: 15px 30px;
+    font-size: 1.3em;
+    font-weight: bold;
+    border: 2px solid cyan;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(45deg, rgb(0, 100, 150), rgb(0, 150, 200));
+    color: white;
+    text-shadow: 0 0 5px currentColor;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto;
+    
+    &:hover {
+        background: linear-gradient(45deg, rgb(0, 150, 200), rgb(0, 200, 255));
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+        transform: translateY(-3px) scale(1.05);
+    }
+    
+    &:active {
+        transform: translateY(-1px) scale(1.02);
+    }
+}
+
+.start-icon {
+    font-size: 1.2em;
+}
+
+.question-section {
+    border: 3px rgb(34, 194, 216) solid;
+    border-radius: 15px;
+    background-color: rgb(4, 4, 54);
+    box-shadow: cyan 0px 0px 10px;
+    padding: 30px;
+    width: 500px;
+    text-align: center;
+}
+
+/* Estilos para la categoría */
+.category-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(45deg, rgb(255, 140, 0), rgb(255, 165, 0));
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    border: 2px solid #ff8c00;
+    box-shadow: 0 0 10px rgba(255, 140, 0, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.category-icon {
+    font-size: 1.1em;
+}
+
+.category-text {
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.question-text {
+    font-size: 1.5em;
+    margin-bottom: 30px;
+    color: cyan;
+    text-shadow: 0 0 10px rgb(19, 160, 160);
+    line-height: 1.4;
+}
+
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.answer-button {
+    padding: 15px 20px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border: 2px solid cyan;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: rgb(0, 100, 150);
+    color: white;
+    text-shadow: 0 0 5px currentColor;
+    
+    &:hover {
+        background-color: rgb(0, 150, 200);
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        transform: translateY(-2px);
+    }
+    
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+.timer {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: rgb(6, 6, 92);
+    border: 2px solid #ff6600;
+    border-radius: 10px;
+    
+    p {
+        margin: 0;
+        color: #ff6600;
+        font-weight: bold;
+        font-size: 1.1em;
+        text-shadow: 0 0 5px #ac4603;
+    }
+}
+
+/* Estilos para el popup */
+preguntados-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+}
+
+/* Estilos de loading */
+.loading-scores {
+    text-align: center;
+    padding: 20px;
+    color: cyan;
+    font-style: italic;
+    animation: pulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+    from {
+        opacity: 0.6;
+    }
+    to {
+        opacity: 1;
+    }
+}

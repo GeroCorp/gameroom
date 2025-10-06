@@ -25,17 +25,13 @@
                   <div class="card text-light" [ngClass]="{'own-msg': msg.username === username, 'other-msg': msg.username !== username}">
                     <div class="card-body">
                       <p class="message-content mb-1">{{ msg.content }}</p>
-                      <small class="message-meta text-secondary">
+                      <small class="message-meta">
                         @if (msg.username == username) {
                           <strong class="text-info">Tú</strong>
                         } @else {
                           <strong class="text-success">{{ msg.username || 'Anónimo' }}</strong>
                         }
-                        @if (isNotToday(msg.send_date)) {
-                          <i class="bi me-1"></i>{{ formatMessageDate(msg.send_date) }}
-                        } @else {
-                          <i class="bi me-1"></i>- {{ msg.send_date | date:'HH:mm' }}
-                        }
+                        <i class="bi me-1 text-light"></i>{{ msg.send_date | formatearTiempo }}
                       </small>
                     </div>
                   </div>

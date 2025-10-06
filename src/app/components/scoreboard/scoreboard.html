@@ -1,0 +1,42 @@
+<div class="main-content">
+    <div class="scoreboard-container">
+        <h2>Leaderboard</h2>
+        <div class="juegos">
+            <button 
+                [class.active]="selectedGame === 'global'"
+                (click)="changeGame('global')">
+                Global
+            </button>
+            <button 
+                [class.active]="selectedGame === 'ahorcado'"
+                (click)="changeGame('ahorcado')">
+                Ahorcado
+            </button>
+            <button 
+                [class.active]="selectedGame === 'mayor-menor'"
+                (click)="changeGame('mayor-menor')">
+                Mayor o Menor
+            </button>
+            <button 
+                [class.active]="selectedGame === 'preguntados'"
+                (click)="changeGame('preguntados')">
+                Preguntados
+            </button>
+        </div>
+        @if(loadingScoreboard()){
+            <p>Cargando...</p>
+        } @else if (scoreboard.length === 0) {
+            <p>No hay puntuaciones aún.</p>
+        } @else {
+            <ol>
+                @for (score of scoreboard; track $index){
+                    <li>
+                        <span class="position">{{$index + 1}}.</span>
+                        <span class="player">{{score.username}}</span>
+                        <span class="points">{{score.puntuacion}} pts</span>
+                    </li>
+                }
+            </ol>
+        }
+    </div>
+</div>

@@ -25,10 +25,17 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/chat" routerLinkActive="active">
-            <i class="bi bi-chat-dots me-1"></i>Chat
+          <a class="nav-link" routerLink="/leaderboard" routerLinkActive="active">
+            <i class="bi bi-trophy me-1"></i>Leaderboard
           </a>
         </li>
+        @if (supabase.user()) {
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/chat" routerLinkActive="active">
+              <i class="bi bi-chat-dots me-1"></i>Chat
+            </a>
+          </li>
+        }
       </ul>
 
       <!-- Usuario / Login -->

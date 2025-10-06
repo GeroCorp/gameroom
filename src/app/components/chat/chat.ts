@@ -18,7 +18,6 @@ export class Chat implements OnInit {
 
   constructor(
     private supabase: Supabase,
-    private cdr: ChangeDetectorRef
   ) { }
 
   async ngOnInit() {

@@ -37,11 +37,11 @@ export class Login {
       case "gero.":
         this.loginForm.setValue({email: "geromcorpus@gmail.com", password: "sombra24"});
         break;
-      case "test":
-        this.loginForm.setValue({email: "test@mail.com", password: "testeo123"});
+      case "carlito":
+        this.loginForm.setValue({email: "carlito@mail.com", password: "12312312"});
         break;
-      case "geronidos":
-        this.loginForm.setValue({email: "geronidos@mail.com", password: "sombra24!"});
+      case "juanjo":
+        this.loginForm.setValue({email: "juanjo@mail.com", password: "12312312"});
         break;
     }
   }

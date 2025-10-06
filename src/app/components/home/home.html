@@ -73,8 +73,8 @@
               Responde preguntas de distintas categorías y demuestra tus conocimientos para ganar.
             </p>
             @if(supabase.user()){
-              <button class="btn btn-warning btn-lg" disabled>
-                <i class="bi bi-tools me-2"></i>Próximamente
+              <button class="btn btn-warning btn-lg" [routerLink]="['preguntados']">
+                <i class="bi bi-tools me-2"></i>Iniciar Juego
               </button>
             }@else{
               <div class="alert alert-info mb-0">

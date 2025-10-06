@@ -17,6 +17,10 @@ import { MayorMenor } from './pages/mayor-menor/mayor-menor';
 import { Popup } from './pages/mayor-menor/popup/popup';
 import { Chat } from './components/chat/chat';
 import { DirectivaDropdown } from './components/nav.component/directiva-dropdown';
+import { FormatearTiempoPipe } from './pipes/formatear-tiempo-pipe';
+import { Preguntados } from './pages/preguntados/preguntados';
+import { Popup as PreguntadosPopup } from './pages/preguntados/popup/popup';
+import { Scoreboard } from './components/scoreboard/scoreboard';
 
 @NgModule({
   declarations: [
@@ -32,7 +36,11 @@ import { DirectivaDropdown } from './components/nav.component/directiva-dropdown
     MayorMenor,
     Popup,
     Chat,
-    DirectivaDropdown
+    DirectivaDropdown,
+    FormatearTiempoPipe,
+    Preguntados,
+    PreguntadosPopup,
+    Scoreboard
   ],
   imports: [
     BrowserModule,

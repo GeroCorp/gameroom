@@ -1,0 +1,84 @@
+<div class="game-layout">
+    <div class="left-column">
+        <div class="score-container">
+            <h2>Puntaje</h2>
+            <div class="score-display">
+                <span class="score-number">{{puntuacion}}</span>
+                <span class="score-label">puntos</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Columna central: Juego principal -->
+    <div class="main">
+        <div class="header">
+            <h1>Preguntados</h1>
+        </div>
+
+        <div class="content">
+            <div class="container-juego">
+                @if (gameState === 'pregame') {
+                    <div class="start-game">
+                        <h3>¡Bienvenido a Preguntados!</h3>
+                        <p>Responde preguntas de programación (ponele) y ganá puntos.</p>
+                        <button class="btn-start-game" (click)="startGame()">
+                            <span class="start-icon"></span> Comenzar
+                        </button>
+                    </div>
+                }@else if (gameState === 'playing'){
+                    <div class="question-section">
+                        <!-- Categoría de la pregunta -->
+                        @if (selectedQuestion) {
+                            <div class="category-badge">
+                                <span class="category-icon">📂</span>
+                                <span class="category-text">{{selectedQuestion.categoria}}</span>
+                            </div>
+                        }
+                        
+                        @if (selectedQuestion) {
+                            <h2 class="question-text">{{selectedQuestion.pregunta}}</h2>
+                            <div class="answers">
+                                @for (opcion of questionOptions; track $index){
+                                    <button class="answer-button" (click)="handleAnswer(opcion)">{{opcion}}</button>
+                                }
+                            </div>
+                            <div class="timer">
+                                <p>Tiempo restante: {{timer}} segundos</p>
+                            </div>
+                        } @else {
+                            <p>Cargando pregunta...</p>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="right-column">
+        <div class="leaderboard">
+            <h2>Leaderboard</h2>
+            @if(loadingScoreboard){
+                <p>Cargando...</p>
+            } @else if (scoreboard.length === 0) {
+                <p>No hay puntuaciones aún. ¡Sé el primero!</p>
+            } @else {
+                <ol>
+                    @for (score of scoreboard; track $index){
+                        <li>
+                            <span class="player-name">{{score.username}}</span>
+                            <span class="player-score">{{score.puntuacion}} pts</span>
+                        </li>
+                    }
+                </ol>
+            }
+        </div>
+    </div>
+    @if(gameState === 'won' || gameState === 'lost'){
+        <preguntados-popup
+        [state]="gameState === 'won' ? 'win' : 'lose'"
+        [correctAnswer]="selectedQuestion?.respuesta"
+        [points]="puntuacion"
+        (nuevoJuego)="startGame()"
+        ></preguntados-popup>
+    }
+</div>
