@@ -50,15 +50,25 @@
           </div>
         </div>
         
-        <!-- Input de mensaje -->
+        
         <div class="card-footer bg-light">
+
+          <!-- Mensaje de error -->
+          @if (errorMessage) {
+            <div class="alert alert-danger alert-dismissible fade show mb-2" role="alert">
+              <i class="bi bi-exclamation-triangle me-2"></i>{{ errorMessage }}
+              <button type="button" class="btn-close" (click)="errorMessage = ''" aria-label="Close"></button>
+            </div>
+          }
+          
           <div class="input-group">
             <input 
               type="text" 
               class="form-control" 
               [(ngModel)]="newMessage" 
               placeholder="Escribe tu mensaje..."
-              (keyup.enter)="sendMessage()">
+              (keyup.enter)="sendMessage()"
+              (input)="onMessageInput()">
             <button 
               class="btn btn-primary" 
               type="button" 
@@ -67,6 +77,11 @@
               <i class="bi bi-send"></i>
             </button>
           </div>
+          
+          
+          <small class="character-counter mt-1 d-block text-muted">
+            {{ newMessage.length }}/{{ maxLength }} caracteres
+          </small>
         </div>
       </div>
     </div>

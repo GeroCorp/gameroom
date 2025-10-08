@@ -15,7 +15,8 @@ export class Chat implements OnInit {
   loading = signal(false);
   newMessage: string = '';
   username: string = ''
-
+  maxLength = 150;
+  errorMessage: string = '';
   constructor(
     private supabase: Supabase,
   ) { }
@@ -48,6 +49,18 @@ export class Chat implements OnInit {
   }
 
   async sendMessage() {
+    // Limpiar mensaje de error previo
+    this.errorMessage = '';
+    
+    if (this.newMessage.length > this.maxLength) {
+      this.errorMessage = `El mensaje no puede exceder los ${this.maxLength} caracteres.`;
+      
+      // Cerrar mensaje luego de 3 segundos
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 3000);
+      return;
+    }
     if (this.newMessage.trim()) {
       const tempContent = this.newMessage;
       try {
@@ -59,6 +72,13 @@ export class Chat implements OnInit {
         await this.supabase.sendMessage(tempContent)
         this.scrollToBottom()
       }
+    }
+  }
+
+  // Limpiar error cuando el usuario empiece a escribir
+  onMessageInput() {
+    if (this.errorMessage) {
+      this.errorMessage = '';
     }
   }
 
@@ -85,52 +105,6 @@ export class Chat implements OnInit {
     });
   }
 
-
-  // verificar si la fecha del mensaje no es del mismo dia
-  isNotToday(messageDate: string): boolean {
-    if (!messageDate) return false;
-    
-    const msgDate = new Date(messageDate);
-    const today = new Date();
-    
-    // Comparar solo año, mes y día
-    return !(
-      msgDate.getFullYear() === today.getFullYear() &&
-      msgDate.getMonth() === today.getMonth() &&
-      msgDate.getDate() === today.getDate()
-    );
-  }
-
-  // Función para formatear la fecha cuando no es hoy
-  formatMessageDate(messageDate: string): string {
-    const msgDate = new Date(messageDate);
-    const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
-
-    // Si es ayer
-    if (
-      msgDate.getFullYear() === yesterday.getFullYear() &&
-      msgDate.getMonth() === yesterday.getMonth() &&
-      msgDate.getDate() === yesterday.getDate()
-    ) {
-      return 'Ayer';
-    }
-
-    // Si es de esta semana (últimos 7 días)
-    const daysDiff = Math.floor((today.getTime() - msgDate.getTime()) / (1000 * 60 * 60 * 24));
-    if (daysDiff < 7) {
-      const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-      return days[msgDate.getDay()];
-    }
-
-    // Si es más antiguo
-    return msgDate.toLocaleDateString('es-ES', { 
-      day: '2-digit', 
-      month: '2-digit', 
-      year: 'numeric' 
-    });
-  }
 }
 
 

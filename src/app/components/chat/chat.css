@@ -4,6 +4,39 @@
   margin-bottom: 10px;
 }
 
+/* Estilos para el área de input */
+.card-footer {
+  position: relative;
+}
+
+.alert {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.character-counter {
+  transition: color 0.2s ease;
+}
+
+.character-counter.warning {
+  color: #ffc107 !important;
+}
+
+.character-counter.danger {
+  color: #dc3545 !important;
+  font-weight: bold;
+}
+
 .message-item.own {
   justify-content: flex-end;
 }
