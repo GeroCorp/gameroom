@@ -5,6 +5,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { Chat } from './chat';
 import { FormatearTiempoPipe } from '../../pipes/formatear-tiempo-pipe';
+import { Supabase } from '../../services/supabase';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,9 @@ import { FormatearTiempoPipe } from '../../pipes/formatear-tiempo-pipe';
     RouterModule.forChild([
       { path: '', component: Chat }
     ])
+  ],
+  providers: [
+    Supabase
   ]
 })
 export class ChatModule { }
