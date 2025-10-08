@@ -27,7 +27,6 @@ export class Soyyo implements OnInit{
       
       const data = await this.githubSvc.getUser();
       this.userData = data;
-      console.log(this.userData);
       
     } catch (e) {
       console.error(e);

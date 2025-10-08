@@ -5,9 +5,7 @@ export interface KeyboardState {
   left: boolean;
   right: boolean;
   pause: boolean;
-  reset: boolean;
-  drop: boolean;
-  hold: boolean;
+  down: boolean;
 }
 
 @Injectable({
@@ -20,22 +18,18 @@ export class Keyboard {
     left: false,
     right: false,
     pause: false,
-    reset: false,
-    drop: false,
-    hold: false
+    down: false
   });
 
   // Mapeo de teclas para facil acceso
   private keyMap: { [key: string]: keyof KeyboardState } = {
+    // 'tecla del teclado': 'acción'
     'ArrowUp': 'up',
     'ArrowLeft': 'left',
     'ArrowRight': 'right',
-    'ArrowDown': 'drop',
-    'KeyS': 'drop',
-    'Space': 'hold',
+    'ArrowDown': 'down',
+    'Space': 'pause',
     'KeyP': 'pause',
-    'KeyR': 'reset',
-    'KeyH': 'hold'
   };
 
   constructor() {
@@ -51,6 +45,7 @@ export class Keyboard {
   }
 
   private handleKeyDown(event: KeyboardEvent) {
+    // event.code = tecla presionada en teclado
     const mappedKey = this.keyMap[event.code];
     if (mappedKey) {
       event.preventDefault();
@@ -58,7 +53,7 @@ export class Keyboard {
       // Solo activar si la tecla no estaba ya presionada (evitar repetición)
       if (!this.keyboardState()[mappedKey]) {
         this.setKeyState(mappedKey, true);
-        console.log(`Tecla presionada: ${event.code} -> ${mappedKey}`);
+        
         
         // Volver a false para simular un "tap" y no mantener
         setTimeout(() => {
@@ -68,7 +63,9 @@ export class Keyboard {
     }
   }
 
-  private setKeyState(key: keyof KeyboardState, pressed: boolean) {
+  // Setear el estado de una tecla específica
+  // Key: tecla a actualizar
+  private setKeyState(key: keyof KeyboardState, pressed: boolean) { 
     this.keyboardState.update(state => ({
       ...state,
       [key]: pressed
@@ -87,9 +84,7 @@ export class Keyboard {
       left: false,
       right: false,
       pause: false,
-      reset: false,
-      drop: false,
-      hold: false
+      down: false
     });
   }
 }

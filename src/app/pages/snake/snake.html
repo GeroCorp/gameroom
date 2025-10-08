@@ -1,0 +1,143 @@
+
+<div class="game-layout">
+    <!-- Columna izquierda: Puntaje -->
+    <div class="sidebar-left">
+        <div class="score-container">
+            <h2>Puntaje</h2>
+            <div class="score-display">
+                <span class="score-number">{{puntuacion}}</span>
+                <span class="score-label">puntos</span>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Columna central: Juego principal -->
+    <div class="main">
+        <div class="header">
+            <h2>Snake</h2>
+        </div>
+         @if (gameState() == "running" || gameState() == "paused") {
+        <div class="content">
+            <div class="container-juego">
+                <div class="display-snake">
+                    @for ( row of grid(); track $index ; let rowIndex = $index) {
+                        @for (cell of row ; track $index ; let colIndex = $index) {
+                            <div class="grid-cell"
+                            [ngClass]="{
+                              'snake': cell === 1,
+                              'snake_head': cell === 2,
+                              'obstacle': cell === 3,
+                              'food': cell === 4
+                            }"
+                            >
+                            </div>
+                        }
+                    }
+                </div>
+                <div class="botones">
+
+                    <div class="opt-container">
+                        <button 
+                            HandleKeystroke="pause"
+                            (click)="togglePause()" 
+                            class="opt-button">
+                            {{gameState() === 'paused' ? 'Reanudar' : 'Pausar'}}
+                        </button>
+                    </div>
+                    <div class="gamebtn-container d-pad">
+                        <!-- Fila superior: solo UP -->
+                        <div class="d-pad-row">
+                            <div></div> <!-- Espacio vacío -->
+                            <button 
+                                HandleKeystroke="up"
+                                (click)="moveUp()" 
+                                class="game-button d-pad-up">
+                                <img [src]="'assets/snake/down.svg'" class="arriba">
+                            </button>
+                            <div></div> <!-- Espacio vacío -->
+                        </div>
+                        
+                        <!-- Fila media: LEFT y RIGHT -->
+                        <div class="d-pad-row">
+                            <button 
+                                HandleKeystroke="left"
+                                (click)="moveLeft()" 
+                                class="game-button d-pad-left">
+                                <img [src]="'assets/snake/left-arrow.svg'" alt="Izquierda">
+                            </button>
+                            <div class="d-pad-center"></div> <!-- Centro vacío -->
+                            <button 
+                                HandleKeystroke="right"
+                                (click)="moveRight()" 
+                                class="game-button d-pad-right">
+                                <img [src]="'assets/snake/right-arrow.svg'" alt="Derecha">
+                            </button>
+                        </div>
+                        
+                        <!-- Fila inferior: solo DOWN -->
+                        <div class="d-pad-row">
+                            <div></div> <!-- Espacio vacío -->
+                            <button 
+                                HandleKeystroke="down"
+                                (click)="moveDown()" 
+                                class="game-button d-pad-down">
+                                <img [src]="'assets/snake/down.svg'" alt="Abajo">
+                            </button>
+                            <div></div> <!-- Espacio vacío -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        } @else{
+            <div class="start-game">
+                <h3>¡Bienvenido a Snake!</h3>
+                <strong>Maneja la serpiente y come la comida para ganar puntos.</strong>
+                <br>
+                <p>Usa las flechas del teclado o los botones para mover la serpiente.<br>
+                    Evita chocar contra los obstaculos (Naranjas) y contigo mismo. <br>
+                    Mientras más comas, más rápido se moverá la serpiente.
+                </p>
+
+                <button class="btn-start-game" (click)="startGame()">
+                    <span class="start-icon"></span> Comenzar
+                </button>
+            </div>
+        }
+
+        
+    </div>
+
+    <!-- Columna derecha: Leaderboard -->
+    <div class="sidebar-right">
+        <div class="leaderboard-container">
+            <h2>LeaderBoard</h2>
+            <div class="leaderboard-content">
+                @if (loadingScoreboard()) {
+                    <div class="loading-scores">
+                        <p>Cargando puntuaciones...</p>
+                    </div>
+                } @else if (scoreboard() && scoreboard().length > 0) {
+                    @for (score of scoreboard(); track score.id || $index) {
+                        <div class="score-entry">
+                            <span class="position">{{$index + 1}}.</span>
+                            <span class="player">{{score.username}}</span>
+                            <span class="points">{{score.puntuacion}} pts</span>
+                        </div>
+                    }
+                } @else {
+                    <div class="no-scores">
+                        <p>No hay puntuaciones disponibles</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    @if (gameState() === "gameover") {
+    <app-snake-popup
+        [puntaje]="puntuacion"
+        (nuevoJuego)="startGame()"
+    >
+    </app-snake-popup> }
+</div>

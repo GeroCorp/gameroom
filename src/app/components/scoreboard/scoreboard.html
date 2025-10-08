@@ -3,11 +3,6 @@
         <h2>Leaderboard</h2>
         <div class="juegos">
             <button 
-                [class.active]="selectedGame === 'global'"
-                (click)="changeGame('global')">
-                Global
-            </button>
-            <button 
                 [class.active]="selectedGame === 'ahorcado'"
                 (click)="changeGame('ahorcado')">
                 Ahorcado
@@ -21,6 +16,11 @@
                 [class.active]="selectedGame === 'preguntados'"
                 (click)="changeGame('preguntados')">
                 Preguntados
+            </button>
+            <button 
+                [class.active]="selectedGame === 'snake'"
+                (click)="changeGame('snake')">
+                Snake
             </button>
         </div>
         @if(loadingScoreboard()){

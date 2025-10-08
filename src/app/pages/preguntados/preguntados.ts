@@ -31,7 +31,6 @@ export class Preguntados implements OnInit{
   async getQuestions() {
     try {
       this.questions = await this.supabase.getQuestions();
-      console.log(this.questions);
     } catch (error) {
       console.error('Error al obtener preguntas:', error);
     }
@@ -45,10 +44,6 @@ export class Preguntados implements OnInit{
       console.error('Error al obtener el scoreboard:', e);
     }
     this.loadingScoreboard = false;
-  }
-
-  test(test: string){
-    console.log(test);
   }
 
   async selectRandomQuestion() {
@@ -122,7 +117,6 @@ export class Preguntados implements OnInit{
         clearInterval(this.timerInterval);
         this.endGame();
       }
-      console.log(this.timer);
     }, 1000);
   }
 

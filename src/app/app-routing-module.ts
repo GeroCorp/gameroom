@@ -10,7 +10,7 @@ import { authGuard } from './guards/auth.guard';
 import { guestGuard } from './guards/guest.guard';
 import { Preguntados } from './pages/preguntados/preguntados';
 import { Scoreboard } from './components/scoreboard/scoreboard';
-import { Tetris } from './pages/tetris/tetris';
+import { Snake } from './pages/snake/snake';
 
 // Implementar lazy loading para optimizar <-- (login, register, quien soy)
 // ademasd de guards para rutas que requieren auth
@@ -51,6 +51,11 @@ const routes: Routes = [
     canActivate: [authGuard] // Solo usuarios autenticados
   },
   {
+    "path": "snake", 
+    component: Snake,
+    canActivate: [authGuard] // Solo usuarios autenticados
+  },
+  {
     "path": "chat", 
     component: Chat,
     canActivate: [authGuard] // Solo usuarios autenticados
@@ -58,11 +63,7 @@ const routes: Routes = [
   {
     "path": "leaderboard", 
     component: Scoreboard,
-  },
-  {
-    "path": "tetris", 
-    component: Tetris,
-  },
+  }
 ];
 
 @NgModule({

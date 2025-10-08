@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Tetris } from './tetris';
+import { SnakePopup } from './snake-popup';
 
-describe('Tetris', () => {
-  let component: Tetris;
-  let fixture: ComponentFixture<Tetris>;
+describe('SnakePopup', () => {
+  let component: SnakePopup;
+  let fixture: ComponentFixture<SnakePopup>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [Tetris]
+      declarations: [SnakePopup]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Tetris);
+    fixture = TestBed.createComponent(SnakePopup);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

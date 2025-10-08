@@ -120,7 +120,6 @@ export class Supabase {
       .from('cards')
       .select('*');
     if (error) throw new Error('No se pudieron obtener las cartas.');
-    console.log(data);
     return data;
   }
 
@@ -158,7 +157,6 @@ export class Supabase {
         'postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'messages' },
         (payload) => {
-          console.log('Change received!', payload)
           const newRow = payload.new;
           input.update((arr: any) => { // Update() modifica el signal de forma inmutable
             return [...arr, newRow]
@@ -199,7 +197,6 @@ export class Supabase {
         throw new Error(`Error al guardar puntaje: ${error.message}`);
       }
 
-      console.log('Puntaje guardado exitosamente:', data);
       return data;
     } catch (err: any) {
       console.error('Error en uploadScore:', err);

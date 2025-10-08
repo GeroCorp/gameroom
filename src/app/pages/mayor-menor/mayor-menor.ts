@@ -34,7 +34,6 @@ export class MayorMenor implements OnInit {
 
   async loadCards(){
     this.cards = await this.supabase.getCards();
-    console.log("Cartas cargadas:" + this.cards.length);
   }
 
     
@@ -53,7 +52,6 @@ export class MayorMenor implements OnInit {
       // Solo cambiar estado si tenemos cartas válidas
       if (this.currentCard && this.nextCard) {
         this.state = 'playing';
-        console.log('Cartas asignadas:', this.currentCard, this.nextCard);
       } else {
         console.error('Error al asignar cartas');
       }
@@ -75,23 +73,19 @@ export class MayorMenor implements OnInit {
 
       // preparar siguiente ronda
       await this.nextRound();
-      console.log("Puntos actuales: " + this.userPoints);
       
       this.userGuessed = false;
       this.userGuess = null;
     }
     else {
       this.state = 'lose';
-      console.log("Juego perdido - La carta era:", this.nextCard);
       // Subir puntaje cuando se pierde
       try {
         await this.supabase.uploadScore('mayor-menor', this.userPoints);
         await this.getScoreboard();
-        console.log('Puntaje guardado exitosamente');
       } catch (error) {
         console.error('Error al guardar puntaje:', error);
       }
-      console.log("Juego terminado. Puntos totales: " + this.userPoints);
     }
     
     // Forzar detección de cambios
@@ -111,13 +105,10 @@ export class MayorMenor implements OnInit {
 
     // Seleccionar una nueva carta para la siguiente ronda
     this.nextCard = this.pickRandomCard();
-    console.log(this.currentCard);
-    console.log(this.nextCard);
   }
 
   private async endGame(){
     if (this.state === 'lose'){
-      console.log("Juego terminado. Puntos totales: " + this.userPoints);
       return;
     }
     if (this.cards.length === 0){
@@ -126,11 +117,9 @@ export class MayorMenor implements OnInit {
       try {
         await this.supabase.uploadScore('mayor-menor', this.userPoints);
         await this.getScoreboard();
-        console.log('Puntaje guardado exitosamente');
       } catch (error) {
         console.error('Error al guardar puntaje:', error);
       }
-      console.log("¡Has ganado el juego! Puntos totales: " + this.userPoints);
       return;
     }
   }
@@ -157,23 +146,19 @@ export class MayorMenor implements OnInit {
     // Forzar detección de cambios
     this.cdr.detectChanges();
     
-    console.log('Juego iniciado - Estado:', this.state, 'Current Card:', this.currentCard);
   }
 
   continueGame() {
     this.userGuessed = false;
     this.userGuess = null;
     this.cdr.detectChanges();
-    console.log('Continuando juego...');
   }
 
   async getScoreboard(){
     try {
       this.loadingScoreboard = true;
-      console.log('Obteniendo scoreboard de mayor-menor...');
       const scores = await this.supabase.getScores('mayor-menor');
       this.scoreboard = scores || [];
-      console.log("Scoreboard actualizado:", this.scoreboard);
     } catch (error) {
       console.error('Error al obtener scoreboard:', error);
       this.scoreboard = [];

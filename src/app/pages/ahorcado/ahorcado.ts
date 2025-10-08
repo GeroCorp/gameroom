@@ -64,7 +64,6 @@ export class Ahorcado implements OnInit{
         (wordsArray: string[]) => {
           
           this.palabras = wordsArray;
-          console.log("Palabras cargadas:", this.palabras);
           this.startNewGame();
       });
       this.hangImages.set(this.hangmanService.getHangmanImages()) ;
@@ -113,10 +112,8 @@ export class Ahorcado implements OnInit{
       
       // Verificar si quedan palabras disponibles
       if (this.palabras.length === 0) {
-        console.log('¡Has completado todas las palabras!');
         try {
           await this.supabase.uploadScore('ahorcado', this.puntuacion);
-          console.log('Puntaje guardado exitosamente');
           await this.getScoreboard(); // Actualizar el leaderboard
         } catch (error) {
           console.error('Error al guardar puntaje:', error);
@@ -133,7 +130,6 @@ export class Ahorcado implements OnInit{
       this.nroIntentos = 6;
       this.estado = 'jugando';
       
-      console.log('Nueva palabra seleccionada, continuando juego...');
   }
 
   async estadoDelJuego(){
@@ -144,13 +140,11 @@ export class Ahorcado implements OnInit{
       this.estado = 'perdido';
       try {
         await this.supabase.uploadScore('ahorcado', this.puntuacion);
-        console.log('Puntaje guardado exitosamente');
         await this.getScoreboard(); // Actualizar el leaderboard
       } catch (error) {
         console.error('Error al guardar puntaje:', error);
       }
     }
-    console.log(this.estado);
   }
 
   startNewGame() {
@@ -166,10 +160,8 @@ export class Ahorcado implements OnInit{
   async getScoreboard(){
     try {
       this.loadingScoreboard = true;
-      console.log('Obteniendo scoreboard...');
       const scores = await this.supabase.getScores('ahorcado');
       this.scoreboard = scores || []; // Asegurar que siempre sea un array
-      console.log("Scoreboard actualizado:", this.scoreboard);
     } catch (error) {
       console.error('Error al obtener scoreboard:', error);
       this.scoreboard = []; // Array vacío en caso de error

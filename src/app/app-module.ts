@@ -21,9 +21,9 @@ import { FormatearTiempoPipe } from './pipes/formatear-tiempo-pipe';
 import { Preguntados } from './pages/preguntados/preguntados';
 import { Popup as PreguntadosPopup } from './pages/preguntados/popup/popup';
 import { Scoreboard } from './components/scoreboard/scoreboard';
-import { Tetris } from './pages/tetris/tetris';
-import { HandleButtons } from './pages/tetris/handle-buttons';
-import { Grilla } from './pages/tetris/grilla/grilla';
+import { Snake } from './pages/snake/snake';
+import { HandleKeystroke } from './pages/snake/handle-keystroke';
+import { SnakePopup } from './pages/snake/snake-popup/snake-popup';
 
 
 @NgModule({
@@ -45,9 +45,9 @@ import { Grilla } from './pages/tetris/grilla/grilla';
     Preguntados,
     PreguntadosPopup,
     Scoreboard,
-    Tetris,
-    HandleButtons,
-    Grilla
+    Snake,
+    HandleKeystroke,
+    SnakePopup
   ],
   imports: [
     BrowserModule,
