@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Login } from '../../components/login/login';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Register } from '../../components/register/register';
 
 @Component({
@@ -11,16 +11,25 @@ import { Register } from '../../components/register/register';
 })
 export class Log {
 
-  nashe : string = "";
+  url : string = "";
 
-  constructor(public route: ActivatedRoute) {}
-  
-  
+  constructor(public route: ActivatedRoute, private router: Router) {}
   
   ngOnInit() {
-    this.route.url.subscribe(([url]) => {
-      const {path, parameters} = url;
-      this.nashe = path;
-    })
+    // Obtener la URL actual para determinar si es login o register
+    const currentUrl = this.router.url;
+    console.log('Current URL:', currentUrl);
+    
+    // Detectar basándose en la URL completa
+    if (currentUrl === '/login' || currentUrl.startsWith('/login')) {
+      this.url = 'login';
+    } else if (currentUrl === '/register' || currentUrl.startsWith('/register')) {
+      this.url = 'register';
+    } else {
+      // Por defecto mostrar login
+      this.url = 'login';
+    }
+    
+    console.log('URL set to:', this.url);
   }
 }

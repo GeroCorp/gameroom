@@ -3,7 +3,13 @@
     <div class="col-lg-5 col-md-7 col-sm-9 col-11">
       <div class="card shadow-lg">
         <div class="card-body p-5">
-          @if (this.nashe == "login"){
+          
+          <!-- Debug info -->
+          <div class="text-center mb-3">
+            <small class="text-muted">URL: {{this.url}}</small>
+          </div>
+          
+          @if (this.url === "login") {
             <div class="text-center mb-4">
               <h2 class="card-title text-primary fw-bold">
                 <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
@@ -19,9 +25,7 @@
                 <i class="bi bi-person-plus me-2"></i>Registrarse
               </a>
             </div>
-          }
-          
-          @if (this.nashe == "register"){
+          } @else {
             <div class="text-center mb-4">
               <h2 class="card-title text-success fw-bold">
                 <i class="bi bi-person-plus me-2"></i>Registrarse

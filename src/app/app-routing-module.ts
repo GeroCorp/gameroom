@@ -1,68 +1,59 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Soyyo } from './components/soyyo/soyyo';
 import { Home } from './components/home/home';
-import { Log } from './pages/log/log';
-import { Ahorcado } from './pages/ahorcado/ahorcado';
-import { MayorMenor } from './pages/mayor-menor/mayor-menor';
-import { Chat } from './components/chat/chat';
 import { authGuard } from './guards/auth.guard';
 import { guestGuard } from './guards/guest.guard';
-import { Preguntados } from './pages/preguntados/preguntados';
-import { Scoreboard } from './components/scoreboard/scoreboard';
-import { Snake } from './pages/snake/snake';
 
-// Implementar lazy loading para optimizar <-- (login, register, quien soy)
-// ademasd de guards para rutas que requieren auth
-
+// Lazy loading implementado para optimizar la carga de la aplicación
+// Los módulos se cargan solo cuando son necesarios
 
 const routes: Routes = [
   {
-    "path": "", 
+    path: "", 
     component: Home,
   },
   {
-    "path": "login", 
-    component: Log,
+    path: "login", 
+    loadChildren: () => import('./pages/log/auth.module').then(m => m.AuthModule),
     canActivate: [guestGuard] // Solo usuarios NO autenticados pueden ver login
   },
   {
-    "path": "register", 
-    component: Log,
+    path: "register", 
+    loadChildren: () => import('./pages/log/auth.module').then(m => m.AuthModule),
     canActivate: [guestGuard] // Solo usuarios NO autenticados pueden ver register
   },
   {
-    "path": "quiensoy", 
-    component: Soyyo,
+    path: "quiensoy", 
+    loadChildren: () => import('./components/soyyo/soyyo.module').then(m => m.SoyyoModule),
   },
   {
-    "path": "ahorcado", 
-    component: Ahorcado,
+    path: "ahorcado", 
+    loadChildren: () => import('./pages/ahorcado/ahorcado.module').then(m => m.AhorcadoModule),
     canActivate: [authGuard] // Solo usuarios autenticados
   },
   {
-    "path": "mayormenor", 
-    component: MayorMenor,
+    path: "mayormenor", 
+    loadChildren: () => import('./pages/mayor-menor/mayor-menor.module').then(m => m.MayorMenorModule),
     canActivate: [authGuard] // Solo usuarios autenticados
   },
   {
-    "path": "preguntados", 
-    component: Preguntados,
+    path: "preguntados", 
+    loadChildren: () => import('./pages/preguntados/preguntados.module').then(m => m.PreguntadosModule),
     canActivate: [authGuard] // Solo usuarios autenticados
   },
   {
-    "path": "snake", 
-    component: Snake,
+    path: "snake", 
+    loadChildren: () => import('./pages/snake/snake.module').then(m => m.SnakeModule),
     canActivate: [authGuard] // Solo usuarios autenticados
   },
   {
-    "path": "chat", 
-    component: Chat,
+    path: "chat", 
+    loadChildren: () => import('./components/chat/chat.module').then(m => m.ChatModule),
     canActivate: [authGuard] // Solo usuarios autenticados
   },
   {
-    "path": "leaderboard", 
-    component: Scoreboard,
+    path: "leaderboard", 
+    loadChildren: () => import('./components/scoreboard/scoreboard.module').then(m => m.ScoreboardModule),
   }
 ];
 
